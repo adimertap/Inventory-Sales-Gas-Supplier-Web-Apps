@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Inventory;
 use App\Http\Controllers\Controller;
 use App\Models\Inventory\KartuGudang;
 use App\Models\Master\Produk;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -24,6 +25,40 @@ class KartuGudangController extends Controller
         return view('pages.inventory.kartugudang.index', compact('produk','today','tanggal'));
     }
 
+    public function cetak_pdf()
+    {
+        $produk = Produk::all();
+ 
+    	$pdf = Pdf::loadview('pdf.kartu_pdf',['produk'=>$produk]);
+    	return $pdf->download('laporan-stok.pdf');
+    }
+
+    public function cetak_detail_pdf($id)
+    {
+        $kartu = KartuGudang::where('id_produk', $id)->get();
+        $produk = Produk::find($id);
+
+        $pdf = Pdf::loadview('pdf.kartu_pdf_detail',['kartu'=>$kartu], ['produk'=>$produk]);
+    	return $pdf->download('laporan-kartu-stok.pdf');
+    }
+
+    public function cetak_kartu_penerimaan_pdf($id)
+    {
+        $kartu = KartuGudang::where('id_produk', $id)->where('jenis_kartu','Penerimaan')->get();
+        $produk = Produk::find($id);
+
+        $pdf = Pdf::loadview('pdf.kartu_pdf_penerimaan',['kartu'=>$kartu], ['produk'=>$produk]);
+    	return $pdf->download('laporan-kartu-stok-penerimaan.pdf');
+    }
+
+    public function cetak_kartu_penjualan_pdf($id)
+    {
+        $kartu = KartuGudang::where('id_produk', $id)->where('jenis_kartu','Penjualan')->get();
+        $produk = Produk::find($id);
+
+        $pdf = Pdf::loadview('pdf.kartu_pdf_penjualan',['kartu'=>$kartu], ['produk'=>$produk]);
+    	return $pdf->download('laporan-kartu-stok-penjualan.pdf');
+    }
  
 
     /**

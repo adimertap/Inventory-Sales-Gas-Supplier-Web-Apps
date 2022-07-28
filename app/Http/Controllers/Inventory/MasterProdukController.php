@@ -50,6 +50,7 @@ class MasterProdukController extends Controller
             $item->id_kategori = $request->id_kategori;
             $item->nama_produk = $request->nama_produk;
             $item->jumlah_minimal = $request->jumlah_minimal;
+            $item->stok = 0;
             $item->save();
     
             Alert::success('Sukses', 'Data Produk Berhasil Ditambahkan');

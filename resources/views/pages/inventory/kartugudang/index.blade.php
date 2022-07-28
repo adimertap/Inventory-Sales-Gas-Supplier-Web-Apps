@@ -33,7 +33,7 @@
                         <p class="text-gray-700">Halaman ini menampilkan seluruh laporan produk pada Perusahaan Anda!,
                             mulai dari jumlah masuk hingga jumlah keluar</p>
                         <hr>
-                        <a class="btn btn-primary btn-sm px-3 py-2" href="#!">
+                        <a class="btn btn-primary btn-sm px-3 py-2" href="{{ route('cetak-kartu-pdf') }}">
                             Download Laporan Stok
                             <i class="fas fa-print ml-3"></i>
                         </a>

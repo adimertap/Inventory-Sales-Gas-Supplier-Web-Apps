@@ -41,7 +41,7 @@
                                     
                                 </div>
                             </div>
-                            <a class="btn btn-primary btn-sm px-3 py-2" href="#!">
+                            <a class="btn btn-primary btn-sm px-3 py-2" href="{{ route('cetak-kartu-penerimaan-pdf', $produk->id_produk) }}">
                                 Download Laporan Stok
                                 <i class="fas fa-print ml-3"></i>
                             </a>

@@ -61,6 +61,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('kartu-gudang', KartuGudangController::class)->middleware('AksesOwner');
     Route::get('/kartu-gudang/penerimaan/{id}', [App\Http\Controllers\Inventory\KartuGudangController::class, 'penerimaan'])->middleware(['AksesOwner'])->name('kartu-gudang-penerimaan');
     Route::get('/kartu-gudang/penjualan/{id}', [App\Http\Controllers\Inventory\KartuGudangController::class, 'penjualan'])->middleware(['AksesOwner'])->name('kartu-gudang-penjualan');
+    Route::get('/kartu-gudang/download/pdf', [App\Http\Controllers\Inventory\KartuGudangController::class, 'cetak_pdf'])->middleware(['AksesOwner'])->name('cetak-kartu-pdf');
+    Route::get('/kartu-gudang/download/pdf/{id}', [App\Http\Controllers\Inventory\KartuGudangController::class, 'cetak_detail_pdf'])->middleware(['AksesOwner'])->name('cetak-kartu-detail-pdf');
+    Route::get('/kartu-penerimaan/download/pdf/{id}', [App\Http\Controllers\Inventory\KartuGudangController::class, 'cetak_kartu_penerimaan_pdf'])->middleware(['AksesOwner'])->name('cetak-kartu-penerimaan-pdf');
+    Route::get('/kartu-penjualan/download/pdf/{id}', [App\Http\Controllers\Inventory\KartuGudangController::class, 'cetak_kartu_penjualan_pdf'])->middleware(['AksesOwner'])->name('cetak-kartu-penjualan-pdf');
 
     // LAPORAN PEMBELIAN
     Route::resource('laporan-pembelian', ReportPembelianController::class)->middleware('AksesOwner');
