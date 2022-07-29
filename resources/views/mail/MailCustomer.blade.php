@@ -493,7 +493,7 @@
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="2">
+                            <td colspan="4">
                               <table class="purchase_content" width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <th class="purchase_heading" align="left">

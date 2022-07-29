@@ -116,8 +116,6 @@ class PenjualanController extends Controller
         $penjualan->update();
         $penjualan->Detail()->sync($request->detail);
 
-        Alert::info('Mohon Menunggu', 'Jangan Klik 2x');
-        Mail::to($penjualan->Customer->email_customer)->send(new MailCustomer($penjualan));
         Alert::success('Sukses', 'Data Penjualan Berhasil Ditambahkan dan Dikirim Via Email');
         return $request;
     }
