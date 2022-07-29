@@ -97,6 +97,10 @@
                                             <td>{{ $item->Customer->nama_customer }}</td>
                                             <td class="text-center">Rp. {{ number_format($item->grand_total) }}</td>
                                             <td class="text-center">
+                                                <a href="{{ route('penjualan-pdf', $item->id_penjualan) }}"
+                                                    class="btn btn-info btn-datatable" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="Download PDF"><i class="fas fa-print"></i>
+                                                </a>
                                                 @if($item->status_bayar == 'Dibayar')
                                                 <span class="badge badge-success">Lunas</span>
                                                 @elseif($item->status_bayar == 'Pending')

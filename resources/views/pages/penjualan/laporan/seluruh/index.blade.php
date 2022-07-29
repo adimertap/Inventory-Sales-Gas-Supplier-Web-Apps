@@ -115,10 +115,10 @@
                                         <td colspan="1" class="text-center">{{ $jumlah }} Transaksi</td>
                                         <td colspan="1" class="text-center">Rp. {{ number_format($total) }}</td>
                                         <td colspan="1" class="text-center">
-                                            <a href="#"
-                                                class="btn btn-info btn-datatable" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Download Excel"> 
-                                                <i class="fas fa-download"></i>
+                                            <button type="button" name="filter" onclick="gas(event)"
+                                            class="btn btn-sm btn-info">.pdf</button>
+                                            <a href="#" class="btn btn-info btn-sm" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" title="Download Excel"> .excel
                                             </a>
                                         </td>
                                     </tr>
@@ -172,6 +172,29 @@
             document.getElementById('clock').innerHTML = hrs + ':' + min + ':' + sec + ' ' + en;
         }
     });
+
+    function gas(event) {
+        event.preventDefault()
+        var form1 = $('#form1')
+        var tanggal_mulai = form1.find('input[name="from_date"]').val()
+        var tanggal_selesai = form1.find('input[name="to_date"]').val()
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        Toast.fire({
+            icon: 'info',
+            title: 'Mohon Tunggu, Data Sedang diproses ...'
+        })
+        window.location.href = '/penjualan-seluruh/download/pdf?from=' + tanggal_mulai + '&to=' + tanggal_selesai
+    }
 
     function filter_tanggal(event) {
         event.preventDefault()

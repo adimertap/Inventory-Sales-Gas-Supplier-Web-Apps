@@ -49,9 +49,9 @@
                 <td>{{$p->jumlah_keluar}}</td>
                 <td>{{$p->saldo_akhir}}</td>
                 @if ($p->jenis_kartu == 'Penerimaan')
-                <td>{{$p->harga_beli}}</td>
+                <td>Rp. {{number_format($p->harga_beli)}}</td>
                 @else
-                <td>{{$p->harga_jual}}</td>
+                <td>Rp. {{number_format($p->harga_jual)}}</td>
                 @endif
 			</tr>
 			@endforeach

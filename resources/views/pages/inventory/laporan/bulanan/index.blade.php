@@ -76,7 +76,14 @@
                                         <td colspan="3" class="text-center"> Grand Total Keseluruhan</td>
                                         <td colspan="1" class="text-center">{{ $jumlah }} Transaksi</td>
                                         <td colspan="1" class="text-center">Rp. {{ number_format($total) }}</td>
-                                        <td></td>
+                                        <td class="text-center">
+                                            <a href="{{ route('pembelian-bulanan-pdf') }}" class="btn btn-info btn-sm" data-bs-toggle="tooltip"
+                                            data-bs-placement="top" title="Download PDF">.pdf
+                                            </a>
+                                            <a href="{{ route('pembelian-bulanan-pdf') }}" class="btn btn-info btn-sm" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" title="Download Excel">.excel
+                                            </a>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>

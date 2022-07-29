@@ -118,6 +118,10 @@
                                                 @endif
                                             </td>
                                             <td class="text-center">
+                                                <a href="{{ route('pembelian-pdf', $item->id_pembelian) }}" class="btn btn-info btn-datatable"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Download PDF"> <i class="fas fa-print"></i>
+                                                </a>
                                                 <a href="{{ route('pembelian.show', $item->id_pembelian) }}" class="btn btn-secondary btn-datatable"
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     title="Detail Pembelian"> <i class="fas fa-eye"></i>

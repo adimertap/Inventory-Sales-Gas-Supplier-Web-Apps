@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Inventory;
 use App\Http\Controllers\Controller;
 use App\Models\Inventory\Pembelian;
 use App\Models\Inventory\Penerimaan;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -24,6 +25,17 @@ class ReportHarianPembelianController extends Controller
         $tanggal = Carbon::now()->format('j F Y');
 
         return view('pages.inventory.laporan.harian.harianpembelian', compact('pembelian','total','jumlah','today','tanggal'));
+    }
+
+    public function pembelian_harian_Pdf()
+    {
+        $pembelian = Pembelian::where('tanggal_pembelian', Carbon::now()->format('Y-m-d'))->where('status','Diterima')->get();
+        $total = Pembelian::where('tanggal_pembelian', Carbon::now()->format('Y-m-d'))->where('status','Diterima')->sum('grand_total');
+        $jumlah = Pembelian::where('tanggal_pembelian', Carbon::now()->format('Y-m-d'))->where('status','Diterima')->count();
+        
+        $hari = Carbon::now()->format('d-m-Y');
+    	$pdf = Pdf::loadview('pdf.pembelian.harian.pembelian_harian_pdf',['pembelian'=>$pembelian, 'total' =>$total,'jumlah' => $jumlah, 'hari' => $hari]);
+    	return $pdf->download('Pembelian-Hari-ini.pdf');
     }
     
     /**

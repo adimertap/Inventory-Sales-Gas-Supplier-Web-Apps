@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Penjualan\Penjualan;
 use App\Http\Controllers\Controller;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReportPenjualanController extends Controller
 {
@@ -39,6 +40,26 @@ class ReportPenjualanController extends Controller
     public function reset_tanggal()
     {
         return redirect()->route('laporan-penjualan.index');
+    }
+
+    public function penjualan_seluruh_Pdf(Request $request)
+    {
+        $penjualan = Penjualan::with([
+            'detail','customer'
+        ]);
+
+        if($request->from){
+            $penjualan->where('tanggal_penjualan', '>=', $request->from);
+        }
+        if($request->to){
+            $penjualan->where('tanggal_penjualan', '<=', $request->to);
+        }
+        $penjualan = $penjualan->get();
+        $total = $penjualan->sum('grand_total');
+        $jumlah = $penjualan->count();
+
+        $pdf = Pdf::loadview('pdf.penjualan.seluruh.penjualan_seluruh_pdf',['penjualan'=>$penjualan, 'total' =>$total,'jumlah' => $jumlah]);
+    	return $pdf->download('Penjualan-Keseluruhan.pdf');
     }
 
 

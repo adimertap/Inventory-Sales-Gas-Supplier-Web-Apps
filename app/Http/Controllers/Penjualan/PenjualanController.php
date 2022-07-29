@@ -3,14 +3,18 @@
 namespace App\Http\Controllers\Penjualan;
 
 use App\Http\Controllers\Controller;
+use App\Mail\MailCustomer;
 use App\Models\Inventory\KartuGudang;
 use App\Models\Master\Customer;
 use App\Models\Master\Produk;
 use App\Models\Penjualan\DetailPenjualan;
 use App\Models\Penjualan\Penjualan;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PenjualanController extends Controller
@@ -22,11 +26,18 @@ class PenjualanController extends Controller
      */
     public function index()
     {
-        $penjualan = Penjualan::where('id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+        $penjualan = Penjualan::where('id', Auth::user()->id)->where('tanggal_penjualan', Carbon::now()->format('Y-m-d'))->orderBy('created_at', 'DESC')->get();
         $penjualan_hari = Penjualan::where('id', Auth::user()->id)->count();
         $total = Penjualan::where('id', Auth::user()->id)->sum('grand_total');
 
         return view('pages.penjualan.penjualan.index', compact('penjualan','penjualan_hari','total'));
+    }
+
+    public function penjualan_pdf($id)
+    {
+        $penjualan = Penjualan::with('Detail','Customer')->find($id);
+        $pdf = Pdf::loadview('pdf.penjualan.penjualan_pdf',['penjualan'=>$penjualan]);
+    	return $pdf->download('Penjualan.pdf');
     }
 
     /**
@@ -105,7 +116,9 @@ class PenjualanController extends Controller
         $penjualan->update();
         $penjualan->Detail()->sync($request->detail);
 
-        Alert::success('Sukses', 'Data Penjualan Berhasil Ditambahkan');
+        Alert::info('Mohon Menunggu', 'Jangan Klik 2x');
+        Mail::to($penjualan->Customer->email_customer)->send(new MailCustomer($penjualan));
+        Alert::success('Sukses', 'Data Penjualan Berhasil Ditambahkan dan Dikirim Via Email');
         return $request;
     }
     

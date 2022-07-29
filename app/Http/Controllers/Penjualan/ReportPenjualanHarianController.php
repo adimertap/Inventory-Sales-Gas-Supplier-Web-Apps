@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Penjualan\Penjualan;
 use App\Http\Controllers\Controller;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReportPenjualanHarianController extends Controller
 {
@@ -34,6 +35,19 @@ class ReportPenjualanHarianController extends Controller
         $tanggal = Carbon::now()->format('j F Y');
 
         return view('pages.penjualan.laporan.harian.pegawai', compact('penjualan','total','jumlah','today','tanggal'));
+    }
+
+    public function penjualan_harian_Pdf()
+    {
+        $penjualan = Penjualan::where('tanggal_penjualan', Carbon::now()->format('Y-m-d'))->get();
+        $total = Penjualan::where('tanggal_penjualan', Carbon::now()->format('Y-m-d'))->sum('grand_total');
+        $jumlah = Penjualan::where('tanggal_penjualan', Carbon::now()->format('Y-m-d'))->count();
+        $tanggal = Carbon::now()->format('j F Y');
+
+        $pdf = Pdf::loadview('pdf.penjualan.harian.penjualan_harian_pdf',['penjualan'=>$penjualan, 'total' =>$total,'jumlah' => $jumlah, 'tanggal' => $tanggal]);
+    	return $pdf->download('Penjualan-Hari-ini.pdf');
+
+
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Inventory;
 use App\Http\Controllers\Controller;
 use App\Models\Inventory\Pembelian;
 use App\Models\Inventory\Penerimaan;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -40,6 +41,26 @@ class ReportPembelianController extends Controller
     public function reset()
     {
         return redirect()->route('laporan-pembelian.index');
+    }
+
+    public function pembelian_seluruh_Pdf(Request $request)
+    {
+        $pembelian = Pembelian::with([
+            'detail'
+        ])->where('status','Diterima');
+
+        if($request->from){
+            $pembelian->where('tanggal_pembelian', '>=', $request->from);
+        }
+        if($request->to){
+            $pembelian->where('tanggal_pembelian', '<=', $request->to);
+        }
+        $pembelian = $pembelian->get();
+        $total = $pembelian->sum('grand_total');
+        $jumlah = $pembelian->count();
+        
+    	$pdf = Pdf::loadview('pdf.pembelian.seluruh.pembelian_seluruh_pdf',['pembelian'=>$pembelian, 'total' =>$total,'jumlah' => $jumlah]);
+    	return $pdf->download('Pembelian-Keseluruhan.pdf');
     }
 
     /**

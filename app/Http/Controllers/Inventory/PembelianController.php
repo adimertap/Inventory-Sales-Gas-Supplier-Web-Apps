@@ -7,6 +7,7 @@ use App\Mail\MailSupplier;
 use App\Models\Inventory\Pembelian;
 use App\Models\Master\Produk;
 use App\Models\Master\Supplier;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,13 @@ class PembelianController extends Controller
 
         Alert::success('Sukses', 'Data Pembelian Berhasil Dikirim Ke Supplier, Mohon Tunggu Pengiriman');
         return redirect()->back();
+    }
+
+    public function pembelian_pdf($id)
+    {
+        $pembelian = Pembelian::with('Detail','Supplier','Pegawai')->find($id);
+        $pdf = Pdf::loadview('pdf.pembelian.pembelian_pdf',['pembelian'=>$pembelian]);
+    	return $pdf->download('Pembelian.pdf');
     }
 
     /**

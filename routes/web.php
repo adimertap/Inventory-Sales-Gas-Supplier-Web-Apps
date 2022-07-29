@@ -51,6 +51,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('pembelian', PembelianController::class)->middleware('AksesOwner');
     Route::get('/mail/supplier/{id}', [App\Http\Controllers\Inventory\PembelianController::class, 'mail'])->middleware(['AksesOwner'])->name('pembelian-email');
     Route::post('/pembelian/kirim/{id}', [App\Http\Controllers\Inventory\PembelianController::class, 'kirim'])->middleware(['AksesOwner'])->name('pembelian-kirim');
+    Route::get('/pembelian/download/pdf/{id}', [App\Http\Controllers\Inventory\PembelianController::class, 'pembelian_pdf'])->middleware(['AksesOwner'])->name('pembelian-pdf');
+    
     // PENERIMAAN
     Route::resource('penerimaan', PenerimaanController::class)->middleware('AksesOwner');
     Route::get('penerimaan/proses/{id_pembelian}', [App\Http\Controllers\Inventory\PenerimaanController::class, 'proses'])->middleware(['AksesOwner'])->name('penerimaan-proses');
@@ -74,6 +76,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/laporan-pembelian/reset/tanggal', [App\Http\Controllers\Inventory\ReportPembelianController::class, 'reset'])->middleware(['AksesOwner'])->name('laporan-pembelian-reset');
     Route::get('/laporan-pembelian/reset/{bulan}', [App\Http\Controllers\Inventory\ReportBulananPembelianController::class, 'reset'])->middleware(['AksesOwner'])->name('laporan-pembelian-bulanan-reset');
 
+    // PDF LAPORAN PEMBELIAN
+    Route::get('/pembelian-harian/download/pdf', [App\Http\Controllers\Inventory\ReportHarianPembelianController::class, 'pembelian_harian_Pdf'])->middleware(['AksesOwner'])->name('pembelian-harian-pdf');
+    Route::get('/pembelian-seluruh/download/pdf', [App\Http\Controllers\Inventory\ReportPembelianController::class, 'pembelian_seluruh_Pdf'])->middleware(['AksesOwner'])->name('pembelian-seluruh-pdf');
+    Route::get('/pembelian-bulanan/download/pdf', [App\Http\Controllers\Inventory\ReportBulananPembelianController::class, 'pembelian_bulanan_Pdf'])->middleware(['AksesOwner'])->name('pembelian-bulanan-pdf');
+    Route::get('/pembelian-bulanan/download/pdf/{bulan}', [App\Http\Controllers\Inventory\ReportBulananPembelianController::class, 'pembelian_detail_bulanan_Pdf'])->middleware(['AksesOwner'])->name('pembelian-detail-bulanan-pdf');
+    
     // PENJUALAN
     Route::prefix('Penjualan')
     ->group(function () {
@@ -85,6 +93,7 @@ Route::group(['middleware' => 'auth'], function () {
     // TRANSAKSI PENJUALAN
     Route::resource('penjualan', PenjualanController::class);
     Route::post('/penjualan/bayar/{id}', [App\Http\Controllers\Penjualan\PenjualanController::class, 'bayar'])->name('penjualan-bayar');
+    Route::get('/penjualan/download/pdf/{id}', [App\Http\Controllers\Penjualan\PenjualanController::class, 'penjualan_pdf'])->name('penjualan-pdf');
 
     // LAPORAN
     Route::resource('laporan-penjualan', ReportPenjualanController::class)->middleware(['AksesOwner']);
@@ -93,6 +102,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('laporan-penjualan-harian', ReportPenjualanHarianController::class)->middleware(['AksesOwner']);
     Route::resource('laporan-penjualan-bulanan', ReportPenjualanBulananController::class)->middleware(['AksesOwner']);
     Route::get('/laporan-penjualan/reset/{bulan}', [App\Http\Controllers\Penjualan\ReportPenjualanBulananController::class, 'reset_bulan'])->middleware(['AksesOwner'])->name('laporan-penjualan-bulanan-reset');
+
+     // PDF LAPORAN PENJUALAN
+     Route::get('/penjualan-harian/download/pdf', [App\Http\Controllers\Penjualan\ReportPenjualanHarianController::class, 'penjualan_harian_Pdf'])->middleware(['AksesOwner'])->name('penjualan-harian-pdf');
+     Route::get('/penjualan-seluruh/download/pdf', [App\Http\Controllers\Penjualan\ReportPenjualanController::class, 'penjualan_seluruh_Pdf'])->middleware(['AksesOwner'])->name('penjualan-seluruh-pdf');
+     Route::get('/penjualan-bulanan/download/pdf', [App\Http\Controllers\Penjualan\ReportPenjualanBulananController::class, 'penjualan_bulanan_Pdf'])->middleware(['AksesOwner'])->name('penjualan-bulanan-pdf');
+     Route::get('/penjualan-bulanan/download/pdf/{bulan}', [App\Http\Controllers\Penjualan\ReportPenjualanBulananController::class, 'penjualan_detail_bulanan_Pdf'])->middleware(['AksesOwner'])->name('penjualan-detail-bulanan-pdf');
 });
 
 

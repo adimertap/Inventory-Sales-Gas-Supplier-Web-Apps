@@ -77,9 +77,11 @@
                                         <td colspan="1" class="text-center">{{ $jumlah }} Transaksi</td>
                                         <td colspan="1" class="text-center">Rp. {{ number_format($total) }}</td>
                                         <td colspan="1" class="text-center">
-                                            <a href="#" class="btn btn-info btn-datatable" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Download Excel"> <i
-                                                    class="fas fa-download"></i>
+                                            <a href="{{ route('pembelian-harian-pdf') }}" class="btn btn-info btn-sm" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" title="Download PDF">.pdf
+                                            </a>
+                                             <a href="{{ route('pembelian-harian-pdf') }}" class="btn btn-info btn-sm" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" title="Download PDF">.excel
                                             </a>
                                         </td>
                                     </tr>

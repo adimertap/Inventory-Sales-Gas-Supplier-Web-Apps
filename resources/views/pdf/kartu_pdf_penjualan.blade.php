@@ -46,7 +46,7 @@
 				<td>{{$p->kode_transaksi}}</td>
                 <td>{{$p->jumlah_keluar}}</td>
                 <td>{{$p->saldo_akhir}}</td>
-                <td>{{$p->harga_jual}}</td>
+                <td>Rp. {{ number_format($p->harga_jual)}}</td>
 			</tr>
 			@endforeach
 		</tbody>
