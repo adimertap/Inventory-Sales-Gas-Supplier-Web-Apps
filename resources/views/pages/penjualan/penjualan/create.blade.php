@@ -47,14 +47,17 @@
                                                 </select>
                                             </div>
                                         @else
-                                            <div class="form-group col-md-4">
-                                                <label class="small mb-1" for="id_pegawai">Pegawai</label>
-                                                <input class="form-control" id="id_pegawai" type="text" name="id_pegawai"
-                                                    value="{{ Auth::user()->name }}" readonly />
-                                            </div>
+                                        <div class="form-group col-md-4">
+                                            <label class="small mb-1 mr-1" for="id_pegawai">Pegawai</label><span
+                                                class="mr-4 mb-3" style="color: red">*</span>
+                                            <select class="form-control" name="id_pegawai" class="form-control"
+                                                id="id_pegawai">
+                                                <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
+                                            </select>
+                                        </div>
+                                           
                                         @endif
-                                       
-                                       
+
                                         <div class="form-group col-md-4">
                                             <label class="small mb-1 mr-1" for="tanggal_penjualan">Tanggal
                                                 Penjualan</label><span class="mr-4 mb-3" style="color: red">*</span>
