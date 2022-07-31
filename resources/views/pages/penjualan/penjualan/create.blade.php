@@ -34,7 +34,7 @@
                                             <input class="form-control" id="kode_penjualan" type="text"
                                                 name="kode_penjualan" value="{{ $kode_penjualan }}" readonly />
                                         </div>
-                                        @if (Auth::user()->role == 'Owner')
+                                        @if (Auth::user()->role == 'Owner' || Auth::user()->role == 'Admin')
                                             <div class="form-group col-md-4">
                                                 <label class="small mb-1 mr-1" for="id_pegawai">Pegawai</label><span
                                                     class="mr-4 mb-3" style="color: red">*</span>
