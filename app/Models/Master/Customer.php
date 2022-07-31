@@ -20,8 +20,8 @@ class Customer extends Model
         'kode_customer',
         'no_hp_customer',
         'email_customer',
-        'kota_customer',
         'alamat_customer',
+        'code'
     ];
 
     protected $hidden = [

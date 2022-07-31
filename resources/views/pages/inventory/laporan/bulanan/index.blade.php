@@ -80,9 +80,6 @@
                                             <a href="{{ route('pembelian-bulanan-pdf') }}" class="btn btn-info btn-sm" data-bs-toggle="tooltip"
                                             data-bs-placement="top" title="Download PDF">.pdf
                                             </a>
-                                            <a href="{{ route('pembelian-bulanan-pdf') }}" class="btn btn-info btn-sm" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Download Excel">.excel
-                                            </a>
                                         </td>
                                     </tr>
                                 </table>

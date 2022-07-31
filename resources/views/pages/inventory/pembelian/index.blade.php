@@ -74,7 +74,7 @@
                                                 style="width: 20px;">No</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Office: activate to sort column ascending"
-                                                style="width: 80px;">Pegawai</th>
+                                                style="width: 120px;">Pegawai</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Office: activate to sort column ascending"
                                                 style="width: 40px;">Kode Pembelian</th>
@@ -92,7 +92,7 @@
                                                 style="width: 40px;">Status</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
-                                                style="width: 60px;">Action</th>
+                                                style="width: 120px;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>

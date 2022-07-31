@@ -76,7 +76,7 @@
                                                 <th class="sorting text-center" tabindex="0" aria-controls="dataTable"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Position: activate to sort column ascending"
-                                                style="width: 100px;">Supplier</th>
+                                                style="width: 100px;">Entitas</th>
                                             <th class="sorting text-center" tabindex="0" aria-controls="dataTable"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Position: activate to sort column ascending"
@@ -109,7 +109,11 @@
                                         @forelse ($kartu_keseluruhan as $item)
                                         <tr role="row" class="odd">
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}</th>
-                                            <td class="text-center">{{ $item->Supplier->nama_supplier }}</td>
+                                            @if ($item->Supplier != '')
+                                                <td class="text-center">Supplier {{ $item->Supplier->nama_supplier }}</td>
+                                            @else
+                                                <td class="text-center">Customer {{ $item->Customer->nama_customer }}</td>
+                                            @endif
                                             <td class="text-center">{{ $item->tanggal_transaksi }}</td>
                                             <td class="text-center">{{ $item->kode_transaksi }}</td>
                                             <td class="text-center">{{ $item->jumlah_masuk }}</td>

@@ -21,9 +21,10 @@ class MasterUserController extends Controller
         $pegawai = User::get();
         $count_owner = User::where('role','Owner')->count();
         $count_pegawai = User::where('role','Pegawai')->count();
+        $count_admin = User::where('role','Admin')->count();
 
 
-        return view('pages.inventory.master.user.index', compact('pegawai','count_owner','count_pegawai'));
+        return view('pages.inventory.master.user.index', compact('pegawai','count_owner','count_pegawai','count_admin'));
     }
 
     /**
@@ -44,6 +45,12 @@ class MasterUserController extends Controller
      */
     public function store(Request $request)
     {
+
+        $id = User::getId();
+        foreach($id as $value);
+        $idlama = $value->id;
+        $idbaru = $idlama + 1;
+      
         $pegawai = new User;
         $pegawai->name = $request->name;
         $pegawai->nama_panggilan = $request->nama_panggilan;
@@ -53,6 +60,13 @@ class MasterUserController extends Controller
         $pegawai->email = $request->email;
         $pegawai->password = bcrypt($request->password);
         $pegawai->email_verified_at = Carbon::now();
+        if($request->role == 'Pegawai'){
+            $pegawai->kode_pegawai = 'Sales'.$request->alamat.'-'.$idbaru;
+        }else{
+            $pegawai->kode_pegawai = $request->role.$request->alamat.'-'.$idbaru;
+        }
+
+        
         $pegawai->save();
 
         event(new Registered($pegawai));
@@ -96,11 +110,14 @@ class MasterUserController extends Controller
         $user->name = $request->name;
         $user->nama_panggilan = $request->nama_panggilan;
         $user->no_telephone = $request->no_telephone;
-        $user->daerah_asal = $request->daerah_asal;
         $user->role = $request->role;
         $user->email = $request->email;
-        $user->update();
+        if($request->alamat){
+            $user->kode_pegawai = $user->role.$request->alamat.'-'.$user->id;
+            $user->alamat = $request->alamat;
+        }
 
+        $user->update();
         Alert::success('Sukses', 'Data Pegawai Berhasil Diedit');
         return redirect()->back();
     }

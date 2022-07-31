@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -26,7 +27,8 @@ class User extends Authenticatable
         'nama_panggilan',
         'no_telephone',
         'role',
-        'daerah_asal'
+        'alamat',
+        'kode_pegawai'
     ];
 
     /**
@@ -52,6 +54,17 @@ class User extends Authenticatable
     public function Penjualan()
     {
         return $this->hasMany(Penjualan::class, 'id', 'id');
+    }
+
+    public static function getId()
+    {
+        $getId = DB::table('users')->orderBy('id', 'DESC')->take(1)->get();
+        if (count($getId) > 0) return $getId;
+        return (object)[
+            (object)[
+                'id' => 0
+            ]
+        ];
     }
 
 }

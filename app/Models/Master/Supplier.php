@@ -19,8 +19,8 @@ class Supplier extends Model
         'nama_supplier',
         'email_supplier',
         'no_hp_supplier',
-        'kota_supplier',
         'alamat_supplier',
+        'jenis_id'
     ];
 
     protected $hidden = [
@@ -30,4 +30,9 @@ class Supplier extends Model
     ];
 
     public $timestamps = true;
+
+    public function Jenis()
+    {
+        return $this->belongsTo(JenisSupplier::class, 'jenis_id', 'id_jenis_supplier');
+    }
 }

@@ -20,7 +20,7 @@ class Pembelian extends Model
 
     protected $fillable = [
         'id',
-        'id_supplier',
+        'supplier_id',
         'kode_pembelian',
         'tanggal_pembelian',
         'status',
@@ -42,7 +42,7 @@ class Pembelian extends Model
 
     public function Supplier()
     {
-        return $this->belongsTo(Supplier::class, 'id_supplier', 'id_supplier');
+        return $this->belongsTo(Supplier::class, 'supplier_id', 'id_supplier');
     }
 
     public function Pegawai()

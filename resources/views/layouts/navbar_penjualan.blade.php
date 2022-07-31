@@ -22,7 +22,7 @@
                         <div class="dropdown-user-details-email">{{ Auth::user()->nama_panggilan }}</div>
                     </div>
                 </h6>
-                @if (Auth::user()->role == 'Owner')
+                @if (Auth::user()->role == 'Owner' || Auth::user()->role == 'Admin')
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">
                     <div class="dropdown-item-icon"><i data-feather="columns"></i></div>
@@ -91,11 +91,6 @@
                             <a class="nav-link " href="{{ route('penjualan.index') }}">
                                 Penjualan Saya
                             </a>
-                            {{-- @if (Auth::user()->role == 'Pegawai')
-                            <a class="nav-link " href="{{ route('penjualan-bulan-pegawai') }}">
-                                Penjualan Bulan Ini
-                            </a>
-                            @endif --}}
                         </nav>
                     </div>
                     
@@ -122,12 +117,15 @@
                             </a>
                         </nav>
                     </div>
+                    @endif
+                    @if (Auth::user()->role == 'Owner' || Auth::user()->role == 'Admin')
                     <div class="sidenav-menu-heading">System Inventory</div>
                     <a class="nav-link" href="{{ route('dashboard') }}">
                         <div class="nav-link-icon"><i data-feather="log-out"></i></div>
                         Menuju Inventory
                     </a>
                     @endif
+
                 </div>
             </div>
 

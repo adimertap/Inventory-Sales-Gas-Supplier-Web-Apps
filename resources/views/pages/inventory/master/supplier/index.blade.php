@@ -84,7 +84,7 @@
                                                 style="width: 40px;">No. Telephone</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
-                                                style="width: 40px;">Kota Supplier</th>
+                                                style="width: 40px;">Jenis Supplier</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 200px;">Alamat</th>
@@ -100,7 +100,7 @@
                                             <td>{{ $item->nama_supplier }}</td>
                                             <td>{{ $item->email_supplier }}</td>
                                             <td>{{ $item->no_hp_supplier }}</td>
-                                            <td>{{ $item->kota_supplier }}</td>
+                                            <td><span id="{{ $item->Jenis->id_jenis_supplier }}">{{ $item->Jenis->nama_jenis }}</span></td>
                                             <td>{{ $item->alamat_supplier }}</td>
                                             <td class="text-center">
                                                 <button class="btn btn-primary btn-datatable editSupplierBtn"
@@ -179,13 +179,16 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="small mb-1 mr-1" for="kota_supplier">Daerah Asal Supplier</label><span
+                            <label class="small mb-1 mr-1" for="id_jenis_supplier">Pilih Jenis Supplier</label><span
                                 class="mr-4 mb-3" style="color: red">*</span>
-                            <input class="form-control" name="kota_supplier" type="text"
-                                placeholder="Input Kota Supplier" value="{{ old('kota_supplier') }}"
-                                class="form-control @error('kota_supplier') is-invalid @enderror" required>
-                            @error('kota_supplier')<div class="text-danger small mb-1">{{ $message }}
-                            </div> @enderror
+                            <select class="form-control" name="id_jenis_supplier" class="form-control"
+                                id="id_jenis_supplier">
+                                <option>Pilih Jenis</option>
+                                @foreach ($jenis as $tes)
+                                <option value="{{ $tes->id_jenis_supplier }}">{{ $tes->nama_jenis }}
+                                </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label class="small mb-1 mr-1" for="alamat_supplier">Alamat Supplier</label><span
@@ -251,10 +254,16 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="small mb-1 mr-1" for="kota_supplier">Daerah Asal Supplier</label><span
+                            <label class="small mb-1 mr-1" for="id_jenis_supplier">Pilih Jenis Supplier</label><span
                                 class="mr-4 mb-3" style="color: red">*</span>
-                            <input class="form-control" name="kota_supplier" type="text" id="fkota"
-                                placeholder="Input Kota Supplier" value="{{ old('kota_supplier') }}" required>
+                            <select class="form-control" name="id_jenis_supplier" class="form-control"
+                                id="fjenis">
+                                <option value="" id="tes">Pilih Jenis</option>
+                                @foreach ($jenis as $tes)
+                                <option value="{{ $tes->id_jenis_supplier }}">{{ $tes->nama_jenis }}
+                                </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label class="small mb-1 mr-1" for="alamat_supplier">Alamat Supplier</label><span
@@ -336,12 +345,14 @@
             }
 
             var data = table.row($tr).data();
-            console.log(data)
-
+            var id_jenis = $(data[4]).attr('id')
+            console.log(data, id_jenis)
+          
             $('#fnama').val(data[1])
             $('#femail').val(data[2])
             $('#fphone').val(data[3])
-            $('#fkota').val(data[4])
+            // $('#tes').text(data[4])
+            $('#fjenis').val(id_jenis)
             $('#falamat').val(data[5])
 
             $('#editForm').attr('action', '/Master/master-supplier/' + id)

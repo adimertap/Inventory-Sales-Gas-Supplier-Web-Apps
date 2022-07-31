@@ -84,9 +84,6 @@
                                             <a href="{{ route('penjualan-harian-pdf') }}" class="btn btn-info btn-sm" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" title="Download PDF"> .pdf
                                             </a>
-                                            <a href="#" class="btn btn-info btn-sm" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Download Excel"> .excel
-                                            </a>
                                         </td>
                                     </tr>
                                 </table>

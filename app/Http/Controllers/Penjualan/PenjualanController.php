@@ -26,8 +26,8 @@ class PenjualanController extends Controller
      */
     public function index()
     {
-        $penjualan = Penjualan::where('id', Auth::user()->id)->where('tanggal_penjualan', Carbon::now()->format('Y-m-d'))->orderBy('created_at', 'DESC')->get();
-        $penjualan_hari = Penjualan::where('id', Auth::user()->id)->count();
+        $penjualan = Penjualan::where('id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+        $penjualan_hari = Penjualan::where('id', Auth::user()->id)->where('tanggal_penjualan', Carbon::now()->format('Y-m-d'))->count();
         $total = Penjualan::where('id', Auth::user()->id)->sum('grand_total');
 
         return view('pages.penjualan.penjualan.index', compact('penjualan','penjualan_hari','total'));
@@ -49,7 +49,7 @@ class PenjualanController extends Controller
     {
         $customer = Customer::get();
         $produk = Produk::with('Kategori','Kartugudangterakhir')->get();
-        $pegawai = User::where('role','Pegawai')->get();
+        $pegawai = User::where('role','!=','Owner')->get();
 
         $id = Penjualan::getId();
         foreach($id as $value);
@@ -74,7 +74,7 @@ class PenjualanController extends Controller
         $penjualan->kode_penjualan = $request->kode_penjualan;
         $penjualan->tanggal_penjualan = $request->tanggal_penjualan;
         $penjualan->id_penjualan = $request->id_penjualan;
-        $penjualan->id_customer = $request->id_customer;
+        $penjualan->customer_id = $request->id_customer;
         $penjualan->status_bayar = $request->status_bayar;
         $total_keseluruhan = 0;
         $penjualan->save();
@@ -153,7 +153,7 @@ class PenjualanController extends Controller
         $item = Penjualan::with('Detail','Customer','Pegawai')->find($id);
         $customer = Customer::get();
         $produk = Produk::with('Kategori','Kartugudangterakhir')->get();
-        $pegawai = User::where('role','Pegawai')->get();
+        $pegawai = User::where('role','!=','Owner')->get();
 
         return view('pages.penjualan.penjualan.edit', compact('pegawai','item','customer','produk'));
     }

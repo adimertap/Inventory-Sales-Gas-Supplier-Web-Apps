@@ -12,7 +12,7 @@
 		}
 	</style>
 	<center>
-		<h5>Laporan Penjualan Keseluruhan</h4>
+		<h5>Laporan Penjualan</h4>
         <p>Sukses Berkah Bertumbuh - Penjualan</h4>
 	</center>
  
@@ -22,10 +22,14 @@
 			<tr>
 				<th>No</th>
                 <th>Kode Penjualan</th>
+                <th>Tanggal</th>
                 <th>Customer</th>
-                <th>Tanggal Penjualan</th>
 				<th>Pegawai</th>
-				<th>Grand Total</th>
+				<th>Nama Produk</th>
+				<th>Kategori</th>
+				<th>Jumlah Jual</th>
+				<th>Harga Jual</th>
+				<th>Total Jual</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -34,17 +38,21 @@
 			<tr>
 				<td>{{ $i++ }}</td>
                 <td>{{$p->kode_penjualan}}</td>
-				<td>{{$p->Customer->nama_customer}}</td>
-                <td>{{$p->tanggal_penjualan }}</td>
-                  <td>{{$p->Pegawai->name }}</td>
-				<td>Rp. {{ number_format($p->grand_total)}}</td>
+				<td>{{$p->tanggal_penjualan}}</td>
+				<td>{{$p->nama_customer}}</td>
+				<td>{{$p->Pegawai->name }}</td>
+                <td>{{$p->nama_produk }}</td>
+				<td>{{$p->nama_kategori }}</td>
+				<td>{{$p->jumlah_jual }}</td>
+				<td>Rp. {{ number_format($p->harga_jual)}}</td>
+				<td>Rp. {{ number_format($p->total_jual)}}</td>
 			</tr>
 			@endforeach
 		</tbody>
         <tr>
-            <th colspan="4">Transaksi</th>
-            <th colspan="1">{{ $jumlah }} Transaksi</th>
-            <th colspan="1">Rp. {{ number_format($total) }}</th>
+            <th colspan="8">Transaksi</th>
+            <th colspan="1">{{ $total }} Transaksi</th>
+            <th colspan="1">Rp. {{ number_format($jumlah) }}</th>
         </tr>
 	</table>
  

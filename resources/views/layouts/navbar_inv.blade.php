@@ -27,12 +27,12 @@
                     <div class="dropdown-item-icon"><i data-feather="columns"></i></div>
                     Dashboard Inventory
                 </a>
-                @if (Auth::user()->role == 'Owner')
+                
                 <a class="dropdown-item" href="{{ route('dashboard-penjualan-owner') }}">
                     <div class="dropdown-item-icon"><i data-feather="columns"></i></div>
                     Dashboard Penjualan
                 </a>
-                @endif
+               
 
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
@@ -54,7 +54,7 @@
             <div class="sidenav-menu">
                 <div class="nav accordion" id="accordionSidenav">
                     <div class="sidenav-menu-heading">Dashboard</div>
-                   
+
                     <a class="nav-link" href="{{ route('dashboard') }}">
                         <div class="nav-link-icon"><i class="fas fa-warehouse"></i></div>
                         Dashboard
@@ -73,6 +73,9 @@
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                             <a class="nav-link" href="{{ route('master-user.index') }}">
                                 Pegawai
+                            </a>
+                            <a class="nav-link" href="{{ route('master-jenis-supplier.index') }}">
+                                Jenis Supplier
                             </a>
                             <a class="nav-link" href="{{ route('master-supplier.index') }}">
                                 Supplier
@@ -125,6 +128,7 @@
                         </nav>
                     </div>
 
+                    @if (Auth::user()->role == 'Owner')
                     <div class="sidenav-menu-heading">Pelaporan</div>
                     <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
                         data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -147,16 +151,19 @@
                             </a>
                         </nav>
                     </div>
-                    @if (Auth::user()->role == 'Owner')
-                         <div class="sidenav-menu-heading">System Penjualan</div>
+                    @endif
+
+                    @if (Auth::user()->role == 'Owner' || Auth::user()->role == 'Admin')
+                    <div class="sidenav-menu-heading">System Penjualan</div>
                     <a class="nav-link" href="{{ route('dashboard-penjualan-owner') }}">
                         <div class="nav-link-icon"><i data-feather="log-out"></i></div>
                         Menuju Penjualan
                     </a>
                     @endif
-                   
+
+
                 </div>
-                
+
             </div>
 
             {{-- USER ROLE Side Bar --}}

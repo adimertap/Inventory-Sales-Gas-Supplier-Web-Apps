@@ -80,7 +80,7 @@ class PembelianController extends Controller
         $item->id = Auth::user()->id;
         $item->kode_pembelian = $request->kode_pembelian;
         $item->tanggal_pembelian = $request->tanggal_pembelian;
-        $item->id_supplier = $request->id_supplier;
+        $item->supplier_id = $request->id_supplier;
         $item->status = 'Pending';
         $temp = 0;
         foreach($request->detail as $key=>$tes){
@@ -133,7 +133,7 @@ class PembelianController extends Controller
     {
         $item = Pembelian::find($id);
         $item->tanggal_pembelian = $request->tanggal_pembelian;
-        $item->id_supplier = $request->id_supplier;
+        $item->supplier_id = $request->id_supplier;
         $item->status = 'Pending';
         $temp = 0;
         foreach($request->detail as $key=>$tes){

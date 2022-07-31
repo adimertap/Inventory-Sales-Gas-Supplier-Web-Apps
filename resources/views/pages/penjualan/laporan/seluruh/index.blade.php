@@ -86,7 +86,7 @@
                                                 style="width: 40px;">Total Penjualan</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
-                                                style="width: 60px;">Action</th>
+                                                style="width: 50px;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -115,11 +115,10 @@
                                         <td colspan="1" class="text-center">{{ $jumlah }} Transaksi</td>
                                         <td colspan="1" class="text-center">Rp. {{ number_format($total) }}</td>
                                         <td colspan="1" class="text-center">
-                                            <button type="button" name="filter" onclick="gas(event)"
-                                            class="btn btn-sm btn-info">.pdf</button>
-                                            <a href="#" class="btn btn-info btn-sm" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Download Excel"> .excel
-                                            </a>
+                                            <button class="btn btn-sm btn-info" type="button" data-toggle="modal"
+                                            data-target="#ModalFilterPDF">.pdf</button>
+                                            <button class="btn btn-sm btn-primary" type="button" data-toggle="modal"
+                                            data-target="#ModalFilter">.Excel</button>
                                         </td>
                                     </tr>
                                 </table>
@@ -132,9 +131,233 @@
     </div>
 </main>
 
+<div class="modal fade" id="ModalFilterPDF" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white">Filter Data</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('penjualan-seluruh-pdf') }}" id="form_pdf" method="GET">
+                    <div class="col-12 border p-2 mr-1">
+                        <h5 class="text-primary">Filter Laporan Penjualan!</h5>
+                        <p class="small">Filter Laporan Penjualan Sesuai dengan Kriteria Inputan</p>
+                        <div class="row input-daterange">
+                            <div class="form-group col-6">
+                                <label class="small">Start Date</label>
+                                <div class="input-group input-group-joined">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i data-feather="search"></i>
+                                        </span>
+                                    </div>
+                                    <input type="date" name="from_date_export" id="from_date_export"
+                                        class="form-control" placeholder="From Date" />
+                                </div>
+                            </div>
+                            <div class="form-group col-6">
+                                <label class="small">End Date</label>
+                                <div class="input-group input-group-joined">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i data-feather="search"></i>
+                                        </span>
+                                    </div>
+                                    <input type="date" name="to_date_export" id="to_date_export" class="form-control"
+                                        placeholder="To Date" />
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="form-row">
+                            <div class="form-group col-6">
+                                <label class="small mb-1 mr-1" for="kode">Kode Customer</label><span class="mr-4 mb-3"
+                                    style="color: red">*</span>
+                                <select class="form-control" name="kode" class="form-control" id="kode">
+                                    <option value="">Pilih Kode</option>
+                                    <option value="S">S</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label class="small mb-1 mr-1" for="id_customer">Spesific Customer</label><span class="mr-4 mb-3"
+                                    style="color: red">*</span>
+                                <select class="form-control" name="id_customer" class="form-control" id="id_customer">
+                                    <option value="">Pilih Customer</option>
+                                    @foreach ($customer as $cust)
+                                    <option value="{{ $cust->id_customer }}">{{ $cust->nama_customer }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                     
+                        <div class="form-row">
+                            <div class="form-group col-6">
+                                <label class="small mb-1 mr-1" for="id_produk">Produk</label><span class="mr-4 mb-3"
+                                    style="color: red">*</span>
+                                <select class="form-control" name="id_produk" class="form-control" id="id_produk">
+                                    <option value="">Pilih Produk</option>
+                                    @foreach ($produk as $pro)
+                                    <option value="{{ $pro->nama_produk }}">{{ $pro->nama_produk }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label class="small mb-1 mr-1" for="id_kategori">Kategori</label><span class="mr-4 mb-3"
+                                    style="color: red">*</span>
+                                <select class="form-control" name="id_kategori" class="form-control" id="id_kategori">
+                                    <option value="">Pilih Kategori</option>
+                                    @foreach ($kategori as $kat)
+                                    <option value="{{ $kat->id_kategori }}">{{ $kat->nama_kategori }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="small mb-1 mr-1" for="id_pegawai">Pegawai</label><span class="mr-4 mb-3"
+                                style="color: red">*</span>
+                            <select class="form-control" name="id_pegawai" class="form-control" id="id_pegawai">
+                                <option value="">Pilih Pegawai</option>
+                                @foreach ($pegawai as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalFilter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white">Filter Data</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('penjualan-excel') }}" id="form_excel" method="GET">
+                    <div class="col-12 border p-2 mr-1">
+                        <h5 class="text-primary">Filter Laporan Penjualan!</h5>
+                        <p class="small">Filter Laporan Penjualan Sesuai dengan Kriteria Inputan</p>
+                        <div class="row input-daterange">
+                            <div class="form-group col-6">
+                                <label class="small">Start Date</label>
+                                <div class="input-group input-group-joined">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i data-feather="search"></i>
+                                        </span>
+                                    </div>
+                                    <input type="date" name="from_date_export" id="from_date_export"
+                                        class="form-control" placeholder="From Date" />
+                                </div>
+                            </div>
+                            <div class="form-group col-6">
+                                <label class="small">End Date</label>
+                                <div class="input-group input-group-joined">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i data-feather="search"></i>
+                                        </span>
+                                    </div>
+                                    <input type="date" name="to_date_export" id="to_date_export" class="form-control"
+                                        placeholder="To Date" />
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="form-row">
+                            <div class="form-group col-6">
+                                <label class="small mb-1 mr-1" for="kode">Kode Customer</label><span class="mr-4 mb-3"
+                                    style="color: red">*</span>
+                                <select class="form-control" name="kode" class="form-control" id="kode">
+                                    <option value="">Pilih Kode</option>
+                                    <option value="S">S</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label class="small mb-1 mr-1" for="id_customer">Spesific Customer</label><span class="mr-4 mb-3"
+                                    style="color: red">*</span>
+                                <select class="form-control" name="id_customer" class="form-control" id="id_customer">
+                                    <option value="">Pilih Customer</option>
+                                    @foreach ($customer as $cust)
+                                    <option value="{{ $cust->id_customer }}">{{ $cust->nama_customer }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                     
+                        <div class="form-row">
+                            <div class="form-group col-6">
+                                <label class="small mb-1 mr-1" for="id_produk">Produk</label><span class="mr-4 mb-3"
+                                    style="color: red">*</span>
+                                <select class="form-control" name="id_produk" class="form-control" id="id_produk">
+                                    <option value="">Pilih Produk</option>
+                                    @foreach ($produk as $pro)
+                                    <option value="{{ $pro->nama_produk }}">{{ $pro->nama_produk }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label class="small mb-1 mr-1" for="id_kategori">Kategori</label><span class="mr-4 mb-3"
+                                    style="color: red">*</span>
+                                <select class="form-control" name="id_kategori" class="form-control" id="id_kategori">
+                                    <option value="">Pilih Kategori</option>
+                                    @foreach ($kategori as $kat)
+                                    <option value="{{ $kat->id_kategori }}">{{ $kat->nama_kategori }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="small mb-1 mr-1" for="id_pegawai">Pegawai</label><span class="mr-4 mb-3"
+                                style="color: red">*</span>
+                            <select class="form-control" name="id_pegawai" class="form-control" id="id_pegawai">
+                                <option value="">Pilih Pegawai</option>
+                                @foreach ($pegawai as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
         var table = $('#dataTable').DataTable();
+        $('#kode').change(function () {
+            var option = $(this).find("option:selected").val();
+            if(option == '' || option == null){
+                $('#id_customer').attr("disabled", false);
+            }else{
+                $('#id_customer').attr("disabled", true);
+            }
+        }); 
 
         setInterval(displayclock, 500);
 

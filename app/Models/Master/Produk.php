@@ -16,7 +16,7 @@ class Produk extends Model
     protected $primaryKey = 'id_produk';
 
     protected $fillable = [
-        'id_kategori',
+        'kategori_id',
         'nama_produk',
         'jumlah_minimal',
         'status_jumlah',
@@ -33,7 +33,7 @@ class Produk extends Model
 
     public function Kategori()
     {
-        return $this->belongsTo(Category::class, 'id_kategori', 'id_kategori');
+        return $this->belongsTo(Category::class, 'kategori_id', 'id_kategori');
     }
 
     public function Kartupenerimaan()

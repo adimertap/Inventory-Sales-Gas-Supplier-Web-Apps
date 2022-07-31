@@ -35,6 +35,8 @@ class LoginController extends Controller
        }else{
             return redirect('/Penjualan/dashbord/pegawai');
        }
+            
+      
     }
 
     /**

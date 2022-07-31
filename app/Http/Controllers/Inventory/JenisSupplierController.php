@@ -4,11 +4,10 @@ namespace App\Http\Controllers\Inventory;
 
 use App\Http\Controllers\Controller;
 use App\Models\Master\JenisSupplier;
-use App\Models\Master\Supplier;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class MasterSupplierController extends Controller
+class JenisSupplierController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +16,9 @@ class MasterSupplierController extends Controller
      */
     public function index()
     {
-        $supplier = Supplier::get();
-        $count_supplier = Supplier::count();
         $jenis = JenisSupplier::get();
-
-        return view('pages.inventory.master.supplier.index', compact('supplier','count_supplier','jenis'));
+        $count = JenisSupplier::count();
+        return view('pages.inventory.master.jenis-supplier.index', compact('jenis','count'));
     }
 
     /**
@@ -42,15 +39,11 @@ class MasterSupplierController extends Controller
      */
     public function store(Request $request)
     {
-        $item = new Supplier;
-        $item->nama_supplier = $request->nama_supplier;
-        $item->email_supplier = $request->email_supplier;
-        $item->no_hp_supplier = $request->no_hp_supplier;
-        $item->alamat_supplier = $request->alamat_supplier;
-        $item->jenis_id = $request->id_jenis_supplier;
-        $item->save();
-
-        Alert::success('Sukses', 'Data Supplier Berhasil Ditambahkan');
+        $jenis = new JenisSupplier;
+        $jenis->nama_jenis = $request->nama_jenis;
+        $jenis->save();
+  
+        Alert::success('Sukses', 'Data Jenis Supplier Berhasil Ditambahkan');
         return redirect()->back();
     }
 
@@ -85,15 +78,11 @@ class MasterSupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $item = Supplier::find($id);
-        $item->nama_supplier = $request->nama_supplier;
-        $item->email_supplier = $request->email_supplier;
-        $item->no_hp_supplier = $request->no_hp_supplier;
-        $item->alamat_supplier = $request->alamat_supplier;
-        $item->jenis_id = $request->id_jenis_supplier;
-        $item->save();
+        $jenis = JenisSupplier::find($id);
+        $jenis->nama_jenis = $request->nama_jenis;
+        $jenis->update();
 
-        Alert::success('Sukses', 'Data Supplier Berhasil Diedit');
+        Alert::success('Sukses', 'Data Jenis Supplier Berhasil Ditambahkan');
         return redirect()->back();
     }
 
@@ -105,10 +94,10 @@ class MasterSupplierController extends Controller
      */
     public function destroy($id)
     {
-        $item = Supplier::find($id);
-        $item->delete();
+        $jenis = JenisSupplier::find($id);
+        $jenis->delete();
 
-        Alert::success('Sukses', 'Data Supplier Berhasil Dihapus');
+        Alert::success('Sukses', 'Data Jenis Supplier Berhasil Dihapus');
         return redirect()->back();
     }
 }

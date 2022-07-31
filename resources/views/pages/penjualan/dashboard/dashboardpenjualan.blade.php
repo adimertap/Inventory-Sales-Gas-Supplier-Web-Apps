@@ -124,43 +124,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-4">
-            @forelse ($pegawai as $item)
-            <div class="col-xxl-3 col-lg-6">
-                <div class="card card-collapsable bg-primary text-white mb-4">
-                    <a class="card-header small text-white" href="#collapseCardExample" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                        {{ $item->name }}
-                        <div class="card-collapsable-arrow text-white">
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                    </a>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="mr-3">
-                                {{-- <div class="text-white-75 small">{{ $item->name }}</div> --}}
-                                <p class="small mb-0 m-0">Penjualan Hari Ini</p>
-                                @php
-                                    $total_penjualan =$item->Penjualan->where('tanggal_penjualan', $hari )->sum('grand_total');
-                                @endphp
-                                <div class="text-l font-weight-bold">Rp. {{ number_format($total_penjualan) }}</div>
-                            </div>
-                            <i class="fas fa-user"></i>
-                        </div>
-                    </div>
-                    <div class="collapse" id="collapseCardExample">
-                        <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white" href="{{ route('laporan-pegawai', $item->id) }}">View Report</a>
-                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @empty
-                
-            @endforelse
-
-           
-        </div>
+       
 
     </div>
 

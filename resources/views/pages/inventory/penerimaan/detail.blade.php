@@ -13,14 +13,14 @@
                         <!-- Invoice branding-->
                         <img class="mb-4" src="{{ asset('logo.png') }}" width="60" alt="">
                         <div class="h2 text-black font-weight-bold mb-0">Sukses Berkah Bertumbuh</div>
-                        Detail Transaksi Penerimaan Pembelian Produk
+                        Detail Transaksi Penerimaan Pembelian Produk <br>
+                        {{ $transaksi->kode_penerimaan }}, {{ $transaksi->tanggal_penerimaan }}
                     </div>
                     <div class="col-12 col-lg-auto text-center text-lg-right">
                         <!-- Invoice details-->
-                        <div class="h3 text-black">Invoice Penerimaan</div>
-                        Kode #{{ $transaksi->kode_penerimaan }}
-                        <br>
-                        {{ $transaksi->tanggal_penerimaan }}
+                        <div class="h3 text-black">Invoice Pembelian</div>
+                        Kode Pembelian #{{ $transaksi->Pembelian->kode_pembelian }}
+                        <br>{{ $transaksi->Pembelian->tanggal_pembelian }}
                     </div>
                 </div>
             </div>

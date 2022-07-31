@@ -31,9 +31,6 @@
 
             </div>
             <div class="col-12 col-xl-auto mb-3 mb-sm-0  mr-4">
-                <a href="#" class="btn btn-info btn-sm" data-bs-toggle="tooltip" data-bs-placement="top"
-                    title="Download Excel">Download Excel <i class="fas fa-download  ml-2"></i>
-                </a>
             </div>
         </div>
 

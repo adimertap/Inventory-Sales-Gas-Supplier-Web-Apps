@@ -42,12 +42,12 @@ class MasterProdukController extends Controller
      */
     public function store(Request $request)
     {
-        if(Produk::where('nama_produk',$request->nama_produk)->where('id_kategori',$request->id_kategori)->exists()){
+        if(Produk::where('nama_produk',$request->nama_produk)->where('kategori_id',$request->id_kategori)->exists()){
             Alert::warning('Gagal', 'Produk dengan Kategori Tersebut Sudah Ada');
             return redirect()->back();    
         }else{
             $item = new Produk();
-            $item->id_kategori = $request->id_kategori;
+            $item->kategori_id = $request->id_kategori;
             $item->nama_produk = $request->nama_produk;
             $item->jumlah_minimal = $request->jumlah_minimal;
             $item->stok = 0;
@@ -90,12 +90,12 @@ class MasterProdukController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(Produk::where('nama_produk',$request->nama_produk)->where('id_kategori',$request->id_kategori)->exists()){
+        if(Produk::where('nama_produk',$request->nama_produk)->where('kategori_id',$request->id_kategori)->exists()){
             Alert::warning('Gagal', 'Produk dengan Kategori Tersebut Sudah Ada');
             return redirect()->back();    
         }else{
             $item = Produk::find($id);
-            $item->id_kategori = $request->id_kategori;
+            $item->kategori_id = $request->id_kategori;
             $item->nama_produk = $request->nama_produk;
             $item->jumlah_minimal = $request->jumlah_minimal;
             $item->save();

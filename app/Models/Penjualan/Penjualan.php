@@ -20,7 +20,7 @@ class Penjualan extends Model
 
     protected $fillable = [
         'id',
-        'id_customer',
+        'customer_id',
         'kode_penjualan',
         'tanggal_penjualan',
         'status_bayar',
@@ -42,7 +42,7 @@ class Penjualan extends Model
 
     public function Customer()
     {
-        return $this->belongsTo(Customer::class, 'id_customer', 'id_customer');
+        return $this->belongsTo(Customer::class, 'customer_id', 'id_customer');
     }
 
     public function Pegawai()

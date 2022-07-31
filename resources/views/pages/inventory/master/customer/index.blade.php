@@ -85,9 +85,6 @@
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 40px;">Email</th>
-                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
-                                                colspan="1" aria-label="Salary: activate to sort column ascending"
-                                                style="width: 40px;">Kota</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 140px;">Alamat</th>
@@ -100,11 +97,10 @@
                                         @forelse ($customer as $item)
                                         <tr role="row" class="odd">
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}</th>
-                                            <td>{{ $item->kode_customer }}</td>
+                                            <td><span id="{{ $item->code }}">{{ $item->kode_customer }}</span></td>
                                             <td>{{ $item->nama_customer }}</td>
                                             <td>{{ $item->no_hp_customer }}</td>
                                             <td>{{ $item->email_customer }}</td>
-                                            <td>{{ $item->kota_customer }}</td>
                                             <td>{{ $item->alamat_customer }}</td>
                                             <td class="text-center">
                                                 <button class="btn btn-primary btn-datatable editCustomerBtn"
@@ -149,15 +145,30 @@
                     @csrf
                     <div class="col-12 border p-2 mr-1">
                         <h5 class="text-primary">Informasi Customer!</h5>
-                        <div class="form-group">
-                            <label class="small mb-1 mr-1" for="nama_customer">Nama Customer</label><span
-                                class="mr-4 mb-3" style="color: red">*</span>
-                            <input class="form-control" name="nama_customer" type="text"
-                                placeholder="Input Nama Customer" value="{{ old('nama_customer') }}"
-                                class="form-control @error('nama_customer') is-invalid @enderror" required>
-                            @error('nama_customer')<div class="text-danger small mb-1">{{ $message }}
-                            </div> @enderror
+                        <div class="form-row">
+                            <div class="form-group col-9">
+                                <label class="small mb-1 mr-1" for="nama_customer">Nama Customer</label><span
+                                    class="mr-4 mb-3" style="color: red">*</span>
+                                <input class="form-control" name="nama_customer" type="text"
+                                    placeholder="Input Nama Customer" value="{{ old('nama_customer') }}"
+                                    class="form-control @error('nama_customer') is-invalid @enderror" required>
+                                @error('nama_customer')<div class="text-danger small mb-1">{{ $message }}
+                                </div> @enderror
+                            </div>
+                         
+                            <div class="form-group col-3">
+                                <label class="small mb-1 mr-1" for="kode">Kode</label><span class="mr-4 mb-3"
+                                    style="color: red">*</span>
+                                <select name="kode" id="kode" class="form-control" required>
+                                    <option>Kode</option>
+                                    <option value="S">S</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                </select>
+                            </div>
                         </div>
+
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
@@ -165,7 +176,7 @@
                                         style="color: red">*</span>
                                     <input class="form-control" name="email_customer" type="email_customer"
                                         placeholder="Input Email" value="{{ old('email_customer') }}"
-                                        class="form-control @error('email_customer') is-invalid @enderror" required>
+                                        class="form-control @error('email_customer') is-invalid @enderror">
                                     @error('email_customer')<div class="text-danger small mb-1">{{ $message }}
                                     </div> @enderror
                                 </div>
@@ -176,20 +187,11 @@
                                         class="mr-4 mb-3" style="color: red">*</span>
                                     <input class="form-control" name="no_hp_customer" type="number"
                                         placeholder="Input No. Telephone" value="{{ old('no_hp_customer') }}"
-                                        class="form-control @error('no_hp_customer') is-invalid @enderror" required>
+                                        class="form-control @error('no_hp_customer') is-invalid @enderror">
                                     @error('no_hp_customer')<div class="text-danger small mb-1">{{ $message }}
                                     </div> @enderror
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="small mb-1 mr-1" for="kota_customer">Daerah Asal Customer</label><span
-                                class="mr-4 mb-3" style="color: red">*</span>
-                            <input class="form-control" name="kota_customer" type="text"
-                                placeholder="Input Kota Customer" value="{{ old('kota_customer') }}"
-                                class="form-control @error('kota_customer') is-invalid @enderror" required>
-                            @error('kota_customer')<div class="text-danger small mb-1">{{ $message }}
-                            </div> @enderror
                         </div>
                         <div class="form-group">
                             <label class="small mb-1 mr-1" for="alamat_customer">Alamat Customer</label><span
@@ -230,11 +232,24 @@
                     <div class="col-12 border p-2 mr-1">
                         <h5 class="text-primary">Informasi Customer!</h5>
                         <input type="hidden" name="customer_edit_id" id="customer_edit_id">
-                        <div class="form-group">
-                            <label class="small mb-1 mr-1" for="nama_customer">Nama Customer</label><span
-                                class="mr-4 mb-3" style="color: red">*</span>
-                            <input class="form-control" name="nama_customer" type="text" id="fnama"
-                                placeholder="Input Nama Supplier" value="{{ old('nama_customer') }}" required>
+                        <div class="form-row">
+                            <div class="form-group col-9">
+                                <label class="small mb-1 mr-1" for="nama_customer">Nama Customer</label><span
+                                    class="mr-4 mb-3" style="color: red">*</span>
+                                <input class="form-control" name="nama_customer" type="text" id="fnama"
+                                    placeholder="Input Nama Supplier" value="{{ old('nama_customer') }}" required>
+                            </div>
+                            <div class="form-group col-3">
+                                <label class="small mb-1 mr-1" for="kode">Kode</label><span class="mr-4 mb-3"
+                                    style="color: red">*</span>
+                                <select name="kode" id="fkode" class="form-control" required>
+                                    <option value="" id="code">Kode</option>
+                                    <option value="S">S</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
@@ -253,12 +268,6 @@
                                         placeholder="Input No. Telephone" value="{{ old('no_hp_customer') }}" required>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="small mb-1 mr-1" for="kota_customer">Daerah Asal Customer</label><span
-                                class="mr-4 mb-3" style="color: red">*</span>
-                            <input class="form-control" name="kota_customer" type="text" id="fkota"
-                                placeholder="Input Kota Customer" value="{{ old('kota_customer') }}" required>
                         </div>
                         <div class="form-group">
                             <label class="small mb-1 mr-1" for="alamat_customer">Alamat Customer</label><span
@@ -340,14 +349,17 @@
             }
 
             var data = table.row($tr).data();
-            console.log(data)
+            var span_kode = data[1]
+            var code = $(span_kode).attr('id')
 
             $('#fnama').val(data[2])
             $('#femail').val(data[4])
             $('#fphone').val(data[3])
-            $('#fkota').val(data[5])
-            $('#falamat').val(data[6])
-
+            $('#falamat').val(data[5])
+            $('#code').val(code)
+            $('#code').text(code)
+            $('#fkode').val(code)
+            
             $('#editForm').attr('action', '/Penjualan/master-customer/' + id)
             $('#ModalEdit').modal('show');
         })

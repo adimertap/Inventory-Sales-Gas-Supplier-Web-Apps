@@ -20,7 +20,7 @@
 
     <div class="container-fluid mt-4">
         <div class="row">
-            <div class="col-xl-4 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-primary h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
@@ -39,12 +39,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-primary h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
-                                <div class="small font-weight-bold text-primary mb-1">Total Admin / Owner</div>
+                                <div class="small font-weight-bold text-primary mb-1">Total Owner</div>
                                 <div class="h5">{{ $count_owner }} Orang</div>
                                 <div class="text-xs font-weight-bold text-success d-inline-flex align-items-center">
                                     Role Owner
@@ -57,7 +57,25 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-info h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <div class="small font-weight-bold text-info mb-1">Total Admin</div>
+                                <div class="h5">{{ $count_admin }} Orang</div>
+                                <div class="text-xs font-weight-bold text-success d-inline-flex align-items-center">
+                                    Role Admin
+                                </div>
+                            </div>
+                            <div class="ml-2">
+                                <i class="fa-solid fa-user-gear"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-secondary h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
@@ -91,9 +109,12 @@
                                                 colspan="1" aria-sort="ascending"
                                                 aria-label="Name: activate to sort column descending"
                                                 style="width: 20px;">No</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 30px;">Kode</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 120px;">Nama Pegawai</th>
+                                                style="width: 140px;">Nama</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Office: activate to sort column ascending"
                                                 style="width: 40px;">Nama Panggilan</th>
@@ -102,13 +123,13 @@
                                                 style="width: 40px;">No. Telephone</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
-                                                style="width: 40px;">Email</th>
+                                                style="width: 20px;">Email</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 30px;">Role</th>
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
-                                                style="width: 30px;">Asal</th>
+                                                style="width: 70px;">Alamat</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 20px;">Action</th>
@@ -118,12 +139,13 @@
                                         @forelse ($pegawai as $item)
                                         <tr role="row" class="odd">
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}</th>
+                                            <td>{{ $item->kode_pegawai }}</td>
                                             <td>{{ $item->name }}</td>
                                             <td>{{ $item->nama_panggilan }}</td>
                                             <td>{{ $item->no_telephone }}</td>
                                             <td>{{ $item->email }}</td>
                                             <td>{{ $item->role }}</td>
-                                            <td>{{ $item->daerah_asal }}</td>
+                                            <td>{{ $item->alamat }}</td>
                                             <td class="text-center">
                                                 <button class="btn btn-primary btn-datatable editUserBtn"
                                                     value="{{ $item->id }}" type="button" data-bs-toggle="tooltip"
@@ -200,15 +222,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="small mb-1 mr-1" for="daerah_asal">Asal Pegawai</label><span class="mr-4 mb-3"
-                                style="color: red">*</span>
-                            <input class="form-control" name="daerah_asal" type="text"
-                                placeholder="Input Daerah Asal Pegawai" value="{{ old('daerah_asal') }}"
-                                class="form-control @error('daerah_asal') is-invalid @enderror" required>
-                            @error('daerah_asal')<div class="text-danger small mb-1">{{ $message }}
-                            </div> @enderror
+                            <label class="small mb-1 mr-1" for="alamat">Alamat</label><span
+                                class="mr-4 mb-3" style="color: red">*</span>
+                            <input class="form-control" name="alamat" type="text" id="alamat"
+                                placeholder="Input Alamat" value="{{ old('alamat') }}" required>
                         </div>
-
                         <hr>
                         <h5 class="text-primary">Akun Pegawai!</h5>
                         <div class="row">
@@ -221,6 +239,7 @@
                                         <option value="{{ old('role')}}"> Pilih Role</option>
                                         <option value="Owner">Owner</option>
                                         <option value="Pegawai">Pegawai</option>
+                                         <option value="Admin">Admin</option>
                                     </select>
                                     @error('role')<div class="text-danger small mb-1">{{ $message }}
                                     </div> @enderror
@@ -320,12 +339,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="small mb-1 mr-1" for="daerah_asal">Daerah Asal</label><span class="mr-4 mb-3"
-                                style="color: red">*</span>
-                            <input class="form-control" name="daerah_asal" type="text" id="fasal"
-                                placeholder="Input Daerah Asal Pegawai" value="{{ old('daerah_asal') }}" required></input>
+                            <label class="small mb-1 mr-1" for="alamat">Alamat</label><span
+                                class="mr-4 mb-3" style="color: red">*</span>
+                            <input class="form-control" name="alamat" type="text" id="falamat"
+                                placeholder="Input Alamat" value="{{ old('alamat') }}" required>
                         </div>
-
                         <hr>
                         <h5 class="text-primary">Akun Pegawai!</h5>
                         <div class="row">
@@ -334,9 +352,10 @@
                                     <label class="small mb-1 mr-1" for="role">Role</label><span class="mr-4 mb-3"
                                         style="color: red">*</span>
                                     <select name="role" id="frole" class="form-control" required>
-                                        <option value="{{ old('role')}}"> Pilih Role</option>
+                                        <option value="" id="roless"> Pilih Role</option>
                                         <option value="Owner">Owner</option>
                                         <option value="Pegawai">Pegawai</option>
+                                        <option value="Admin">Admin</option>
                                     </select>
                                 </div>
                             </div>
@@ -423,14 +442,16 @@
             }
 
             var data = table.row($tr).data();
-            console.log(data)
+         
 
-            $('#fname').val(data[1])
-            $('#fnama_panggilan').val(data[2])
-            $('#fno_telephone').val(data[3])
-            $('#femail').val(data[4])
-            $('#frole').val(data[5])
-            $('#fasal').val(data[6])
+            $('#fname').val(data[2])
+            $('#fnama_panggilan').val(data[3])
+            $('#fno_telephone').val(data[4])
+            $('#femail').val(data[5])
+            $('#frole').val(data[6])
+            $('#roless').val(data[6])
+            $('#roless').text(data[6])
+            $('#falamat').val(data[7])
             
             $('#editForm').attr('action','/Master/master-user/'+id)
             $('#ModalEdit').modal('show');

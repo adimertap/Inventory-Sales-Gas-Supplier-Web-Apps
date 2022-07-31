@@ -44,16 +44,15 @@ class MasterCustomerController extends Controller
         foreach ($id as $value);
         $idlama = $value->id_customer;
         $idbaru = $idlama + 1;
-        $blt = date('ym');
-        $kode_customer = 'CS' . $blt . '-' . $idbaru;
+        $kode_customer = 'SBBC-' . $request->kode . '-' . $idbaru;
 
         $item = new Customer();
         $item->nama_customer = $request->nama_customer;
         $item->kode_customer = $kode_customer;
         $item->no_hp_customer = $request->no_hp_customer;
         $item->email_customer = $request->email_customer;
-        $item->kota_customer = $request->kota_customer;
         $item->alamat_customer = $request->alamat_customer;
+        $item->code = $request->code;
         $item->save();
 
         Alert::success('Sukses', 'Data Customer Berhasil Ditambahkan');
@@ -95,8 +94,11 @@ class MasterCustomerController extends Controller
         $item->nama_customer = $request->nama_customer;
         $item->no_hp_customer = $request->no_hp_customer;
         $item->email_customer = $request->email_customer;
-        $item->kota_customer = $request->kota_customer;
         $item->alamat_customer = $request->alamat_customer;
+        if($request->kode){
+            $item->kode_customer = 'SBBC-' . $request->kode . '-' . $item->id_customer;
+            $item->code = $request->kode;
+        }
         $item->update();
 
         Alert::success('Sukses', 'Data Customer Berhasil Diedit');
