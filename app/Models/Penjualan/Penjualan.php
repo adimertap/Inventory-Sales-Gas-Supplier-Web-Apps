@@ -42,12 +42,12 @@ class Penjualan extends Model
 
     public function Customer()
     {
-        return $this->belongsTo(Customer::class, 'customer_id', 'id_customer');
+        return $this->belongsTo(Customer::class, 'customer_id', 'id_customer')->withTrashed();
     }
 
     public function Pegawai()
     {
-        return $this->belongsTo(User::class, 'id', 'id');
+        return $this->belongsTo(User::class, 'id', 'id')->withTrashed();
     }
 
     public static function getId()

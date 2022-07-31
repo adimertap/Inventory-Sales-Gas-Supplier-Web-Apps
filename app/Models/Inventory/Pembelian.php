@@ -42,12 +42,12 @@ class Pembelian extends Model
 
     public function Supplier()
     {
-        return $this->belongsTo(Supplier::class, 'supplier_id', 'id_supplier');
+        return $this->belongsTo(Supplier::class, 'supplier_id', 'id_supplier')->withTrashed();
     }
 
     public function Pegawai()
     {
-        return $this->belongsTo(User::class, 'id', 'id');
+        return $this->belongsTo(User::class, 'id', 'id')->withTrashed();
     }
 
     public static function getId()

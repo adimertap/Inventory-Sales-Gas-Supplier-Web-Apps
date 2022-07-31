@@ -180,50 +180,51 @@
                     @csrf
                     <div class="col-12 border p-2 mr-1">
                         <h5 class="text-primary">Informasi Customer!</h5>
-                        <div class="form-group">
-                            <label class="small mb-1 mr-1" for="nama_customer">Nama Customer</label><span
-                                class="mr-4 mb-3" style="color: red">*</span>
-                            <input class="form-control" name="nama_customer" type="text"
-                                placeholder="Input Nama Customer" value="{{ old('nama_customer') }}"
-                                class="form-control @error('nama_customer') is-invalid @enderror" required>
-                            @error('nama_customer')<div class="text-danger small mb-1">{{ $message }}
-                            </div> @enderror
+                        <div class="form-row">
+                            <div class="form-group col-9">
+                                <label class="small mb-1 mr-1" for="nama_customer">Nama Customer</label><span
+                                    class="mr-4 mb-3" style="color: red">*</span>
+                                <input class="form-control" name="nama_customer" type="text"
+                                    placeholder="Input Nama Customer" value="{{ old('nama_customer') }}"
+                                    class="form-control @error('nama_customer') is-invalid @enderror" required>
+                                @error('nama_customer')<div class="text-danger small mb-1">{{ $message }}
+                                </div> @enderror
+                            </div>
+                            <div class="form-group col-3">
+                                <label class="small mb-1 mr-1" for="kode">Kode</label><span class="mr-4 mb-3"
+                                    style="color: red">*</span>
+                                <select name="kode" id="kode" class="form-control" required>
+                                    <option>Kode</option>
+                                    <option value="S">S</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-6">
                                 <label class="small mb-1 mr-1" for="email_customer">Email</label>
                                 <input class="form-control" name="email_customer" type="email_customer"
                                     placeholder="Input Email" value="{{ old('email_customer') }}"
-                                    class="form-control @error('email_customer') is-invalid @enderror" required>
+                                    class="form-control @error('email_customer') is-invalid @enderror">
                                 @error('email_customer')<div class="text-danger small mb-1">{{ $message }}
                                 </div> @enderror
                             </div>
                             <div class="form-group col-6">
-                                <label class="small mb-1 mr-1" for="no_hp_customer">Telephone</label><span
-                                    class="mr-4 mb-3" style="color: red">*</span>
+                                <label class="small mb-1 mr-1" for="no_hp_customer">Telephone</label>
                                 <input class="form-control" name="no_hp_customer" type="number"
                                     placeholder="Input No. Telephone" value="{{ old('no_hp_customer') }}"
-                                    class="form-control @error('no_hp_customer') is-invalid @enderror" required>
+                                    class="form-control @error('no_hp_customer') is-invalid @enderror">
                                 @error('no_hp_customer')<div class="text-danger small mb-1">{{ $message }}
                                 </div> @enderror
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="small mb-1 mr-1" for="kota_customer">Daerah Asal Customer</label><span
-                                class="mr-4 mb-3" style="color: red">*</span>
-                            <input class="form-control" name="kota_customer" type="text"
-                                placeholder="Input Kota Customer" value="{{ old('kota_customer') }}"
-                                class="form-control @error('kota_customer') is-invalid @enderror" required>
-                            @error('kota_customer')<div class="text-danger small mb-1">{{ $message }}
-                            </div> @enderror
-                        </div>
-                        <div class="form-group">
-                            <label class="small mb-1 mr-1" for="alamat_customer">Alamat Customer</label><span
-                                class="mr-4 mb-3" style="color: red">*</span>
+                            <label class="small mb-1 mr-1" for="alamat_customer">Alamat Customer</label>
                             <textarea class="form-control" name="alamat_customer" type="text"
                                 placeholder="Input Alamat Lengkap" value="{{ old('alamat_customer') }}"
-                                class="form-control @error('alamat_customer') is-invalid @enderror"
-                                required></textarea>
+                                class="form-control @error('alamat_customer') is-invalid @enderror"></textarea>
                             @error('alamat_customer')<div class="text-danger small mb-1">{{ $message }}
                             </div> @enderror
                         </div>

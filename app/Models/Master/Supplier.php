@@ -33,6 +33,6 @@ class Supplier extends Model
 
     public function Jenis()
     {
-        return $this->belongsTo(JenisSupplier::class, 'jenis_id', 'id_jenis_supplier');
+        return $this->belongsTo(JenisSupplier::class, 'jenis_id', 'id_jenis_supplier')->withTrashed();
     }
 }

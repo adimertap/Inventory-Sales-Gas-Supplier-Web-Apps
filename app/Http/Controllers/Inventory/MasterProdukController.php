@@ -90,19 +90,16 @@ class MasterProdukController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(Produk::where('nama_produk',$request->nama_produk)->where('kategori_id',$request->id_kategori)->exists()){
-            Alert::warning('Gagal', 'Produk dengan Kategori Tersebut Sudah Ada');
-            return redirect()->back();    
-        }else{
-            $item = Produk::find($id);
-            $item->kategori_id = $request->id_kategori;
-            $item->nama_produk = $request->nama_produk;
-            $item->jumlah_minimal = $request->jumlah_minimal;
-            $item->save();
-    
-            Alert::success('Sukses', 'Data Produk Berhasil Diedit');
-            return redirect()->back();
-        }
+        
+        $item = Produk::find($id);
+        $item->kategori_id = $request->id_kategori;
+        $item->nama_produk = $request->nama_produk;
+        $item->jumlah_minimal = $request->jumlah_minimal;
+        $item->save();
+
+        Alert::success('Sukses', 'Data Produk Berhasil Diedit');
+        return redirect()->back();
+       
     }
 
     /**

@@ -42,16 +42,16 @@ class KartuGudang extends Model
 
     public function Supplier()
     {
-        return $this->belongsTo(Supplier::class, 'id_supplier', 'id_supplier');
+        return $this->belongsTo(Supplier::class, 'id_supplier', 'id_supplier')->withTrashed();
     }
 
     public function Produk()
     {
-        return $this->belongsTo(Produk::class, 'id_produk', 'id_produk');
+        return $this->belongsTo(Produk::class, 'id_produk', 'id_produk')->withTrashed();
     }
 
     public function Customer()
     {
-        return $this->belongsTo(Customer::class, 'id_customer', 'id_customer');
+        return $this->belongsTo(Customer::class, 'id_customer', 'id_customer')->withTrashed();
     }
 }

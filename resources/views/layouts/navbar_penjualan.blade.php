@@ -88,9 +88,16 @@
                             <a class="nav-link" href="{{ route('penjualan.create') }}">
                                 Tambah Penjualan
                             </a>
+                            @if (Auth::user()->role =='Owner' || Auth::user()->role == 'Admin')
+                            <a class="nav-link " href="{{ route('penjualan.index') }}">
+                                Penjualan Pegawai
+                            </a>
+                            @else
                             <a class="nav-link " href="{{ route('penjualan.index') }}">
                                 Penjualan Saya
                             </a>
+                            @endif
+                           
                         </nav>
                     </div>
                     

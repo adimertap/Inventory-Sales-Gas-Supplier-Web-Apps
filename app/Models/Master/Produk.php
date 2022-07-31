@@ -33,7 +33,7 @@ class Produk extends Model
 
     public function Kategori()
     {
-        return $this->belongsTo(Category::class, 'kategori_id', 'id_kategori');
+        return $this->belongsTo(Category::class, 'kategori_id', 'id_kategori')->withTrashed();
     }
 
     public function Kartupenerimaan()

@@ -46,7 +46,7 @@ class Penerimaan extends Model
 
     public function Pegawai()
     {
-        return $this->belongsTo(User::class, 'id', 'id');
+        return $this->belongsTo(User::class, 'id', 'id')->withTrashed();
     }
 
     public static function getId()

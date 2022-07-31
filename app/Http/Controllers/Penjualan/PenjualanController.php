@@ -26,9 +26,15 @@ class PenjualanController extends Controller
      */
     public function index()
     {
-        $penjualan = Penjualan::where('id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
-        $penjualan_hari = Penjualan::where('id', Auth::user()->id)->where('tanggal_penjualan', Carbon::now()->format('Y-m-d'))->count();
-        $total = Penjualan::where('id', Auth::user()->id)->sum('grand_total');
+        if(Auth::user()->role =='Owner' || Auth::user()->role == 'Admin'){
+            $penjualan = Penjualan::orderBy('created_at', 'DESC')->get();
+            $penjualan_hari = Penjualan::count();
+            $total = Penjualan::sum('grand_total');
+        }else{
+            $penjualan = Penjualan::where('id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+            $penjualan_hari = Penjualan::where('id', Auth::user()->id)->count();
+            $total = Penjualan::where('id', Auth::user()->id)->sum('grand_total');
+        }
 
         return view('pages.penjualan.penjualan.index', compact('penjualan','penjualan_hari','total'));
     }
@@ -116,7 +122,7 @@ class PenjualanController extends Controller
         $penjualan->update();
         $penjualan->Detail()->sync($request->detail);
 
-        Alert::success('Sukses', 'Data Penjualan Berhasil Ditambahkan dan Dikirim Via Email');
+        Alert::success('Sukses', 'Data Penjualan Berhasil Ditambahkan');
         return $request;
     }
     
