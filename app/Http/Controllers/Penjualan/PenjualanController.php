@@ -76,6 +76,10 @@ class PenjualanController extends Controller
     public function store(Request $request)
     {
         $penjualan = new Penjualan();
+        if(Auth::user()->role =='Pegawai'){
+            $ii = User::where('id', $request->id)->first();
+            $penjualan->id = $ii;
+        }
         $penjualan->id = $request->id;
         $penjualan->kode_penjualan = $request->kode_penjualan;
         $penjualan->tanggal_penjualan = $request->tanggal_penjualan;
