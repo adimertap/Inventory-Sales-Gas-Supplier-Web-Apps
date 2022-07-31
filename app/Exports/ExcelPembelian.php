@@ -6,8 +6,10 @@ use App\Models\Inventory\Pembelian as InventoryPembelian;
 use App\Models\Master\JenisSupplier;
 use App\Models\Pembelian;
 use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
@@ -16,26 +18,23 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 
-class ExcelPembelian implements FromCollection, Responsable, ShouldAutoSize,
-WithMapping, WithHeadings, WithColumnWidths, WithEvents, WithCustomStartCell
+class ExcelPembelian implements FromCollection, Responsable, ShouldAutoSize, WithMapping, WithHeadings, WithColumnWidths, WithEvents, WithCustomStartCell
 {
     use Exportable;
     public $pembelian;
     public $grand_total;
-    private $fileName = "report.xlsx";
+    private $fileName = "report-pembelian.xlsx";
 
     public function __construct($pembelian)
     {
         $this->pembelian = $pembelian;
-        $this->grand_total = $pembelian->sum('grand_total');
-        $this->total_produk = $pembelian->count('id_produk');
-    }
-
    
+    }
 
     /**
     * @return \Illuminate\Support\Collection
     */
+
     public function collection()
     {
         return $this->pembelian;
@@ -76,10 +75,10 @@ WithMapping, WithHeadings, WithColumnWidths, WithEvents, WithCustomStartCell
                 $pembelian->nama_kategori,
                 $pembelian->jumlah_order,
                 $pembelian->harga_beli,
-                $pembelian->total_order
+                $pembelian->total_order, 
             ];
-            
     }
+
 
     public function registerEvents(): array
     {
@@ -101,4 +100,10 @@ WithMapping, WithHeadings, WithColumnWidths, WithEvents, WithCustomStartCell
     {
         return 'A3';
     }
+
+
+
+
+
+    // 
 }
