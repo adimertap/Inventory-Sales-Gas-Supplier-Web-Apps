@@ -44,7 +44,7 @@ class MasterCustomerController extends Controller
         foreach ($id as $value);
         $idlama = $value->id_customer;
         $idbaru = $idlama + 1;
-        $kode_customer = 'SBBC-' . $request->kode . '-' . $idbaru;
+        $kode_customer = 'SBBC-' . $request->code . '-' . $idbaru;
 
         $item = new Customer();
         $item->nama_customer = $request->nama_customer;

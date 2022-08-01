@@ -49,11 +49,14 @@
                                                 </select>
                                             </div>
                                         @else
-                                            <div class="form-group col-md-4">
-                                                <label class="small mb-1" for="id_pegawai">Pegawai</label>
-                                                <input class="form-control" id="id_pegawai" type="text" name="id_pegawai"
-                                                    value="{{ $item->Pegawai->name }}" readonly />
-                                            </div>
+                                        <div class="form-group col-md-4">
+                                            <label class="small mb-1 mr-1" for="id_pegawai">Pegawai</label><span
+                                                class="mr-4 mb-3" style="color: red">*</span>
+                                            <select class="form-control" name="id_pegawai" class="form-control"
+                                                id="id_pegawai">
+                                                <option value="{{ $item->Pegawai->id }}">{{ $item->Pegawai->name }}</option>
+                                            </select>
+                                        </div>
                                         @endif
                                         <div class="form-group col-md-4">
                                             <label class="small mb-1 mr-1" for="tanggal_penjualan">Tanggal
@@ -67,7 +70,7 @@
                                     <div class="d-flex justify-content-between">
                                         <a href="{{ route('penjualan.index') }}" class="btn btn-sm btn-light"
                                             type="button">Kembali</a>
-                                        <button class="btn btn-primary btn-sm" type="button"
+                                        <button class="btn btn-primary btn-sm" type="button" id="buttonsimpan"
                                             onclick="SimpanData(event, {{ $item->id_penjualan }})">Simpan</button>
                                     </div>
                                 </div>
@@ -503,12 +506,8 @@
                 var grand_total = $('#grand_total_table').html()
                 var dataform2 = []
                 var role = form.find('input[name="role_pegawai"]').val()
-                if(role == 'Owner'){
-                    var id_pegawai = $('#id_pegawai').find("option:selected").val();
-                }else{
-                    var id_pegawai = form.find('input[name="id_pegawai"]').val()
-                }
-
+                var id_pegawai = $('#id_pegawai').find("option:selected").val();
+             
                 if (tanggal_penjualan == '') {
                     Swal.fire({
                         icon: 'error',
@@ -587,7 +586,7 @@
                         }
 
                         console.log(data)
-
+                        $('#buttonsimpan').prop('disabled', true);
 
                         $.ajax({
                             method: 'put',
@@ -616,6 +615,7 @@
                             },
                             error: function (response) {
                                 console.log(response)
+                                $('#buttonsimpan').prop('disabled', false);
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Oops...',

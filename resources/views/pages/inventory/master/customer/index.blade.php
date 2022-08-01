@@ -157,9 +157,9 @@
                             </div>
                          
                             <div class="form-group col-3">
-                                <label class="small mb-1 mr-1" for="kode">Kode</label><span class="mr-4 mb-3"
+                                <label class="small mb-1 mr-1" for="code">Kode</label><span class="mr-4 mb-3"
                                     style="color: red">*</span>
-                                <select name="kode" id="kode" class="form-control" required>
+                                <select name="code" id="code" class="form-control" required>
                                     <option>Kode</option>
                                     <option value="S">S</option>
                                     <option value="A">A</option>

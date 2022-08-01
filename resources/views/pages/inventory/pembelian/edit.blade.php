@@ -51,7 +51,7 @@
                                     <div class="d-flex justify-content-between">
                                         <a href="{{ route('pembelian.index') }}" class="btn btn-sm btn-light"
                                             type="button">Kembali</a>
-                                        <button class="btn btn-primary btn-sm" type="button"
+                                        <button class="btn btn-primary btn-sm" type="button" id="buttonsimpan"
                                             onclick="SimpanData(event, {{ $item->id_pembelian }})">Simpan</button>
                                     </div>
                                 </div>
@@ -301,12 +301,12 @@
                     var children = $(data[index]).children() 
                     var td_check_total = children[2]
                     var td_tot = $(td_check_total).text()
-                    var td_table_total = td_tot.replace('.', '').replace('.', '').trim()
+                    var td_table_total = td_tot.replace(',', '').replace(',', '').trim()
                     var grand2 = parseInt(grand2) + parseInt(td_table_total)
                     
                 }
-            $('#grand_total_table').html(new Intl.NumberFormat('id').format(grand2))
-            $('#grand_total').val(new Intl.NumberFormat('id').format(grand2))
+            $('#grand_total_table').html(new Intl.NumberFormat('locale').format(grand2))
+            $('#grand_total').val(new Intl.NumberFormat('locale').format(grand2))
 
             const Toast = Swal.mixin({
                 toast: true,
@@ -443,7 +443,7 @@
                         }
 
                         console.log(data)
-
+                        $('#buttonsimpan').prop('disabled', true);
 
                         $.ajax({
                             method: 'put',
@@ -471,6 +471,7 @@
                                 window.location.href = '/pembelian'
                             },
                             error: function (response) {
+                                $('#buttonsimpan').prop('disabled', false);
                                 console.log(response)
                                 Swal.fire({
                                     icon: 'error',

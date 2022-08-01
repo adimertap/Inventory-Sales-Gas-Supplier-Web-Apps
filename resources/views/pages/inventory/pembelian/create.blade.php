@@ -50,7 +50,7 @@
                                     <div class="d-flex justify-content-between">
                                         <a href="{{ route('pembelian.index') }}" class="btn btn-sm btn-light"
                                             type="button">Kembali</a>
-                                        <button class="btn btn-primary btn-sm" type="button"
+                                        <button class="btn btn-primary btn-sm" type="button" id="buttonsimpan"
                                             onclick="SimpanData(event, {{ $idbaru }})">Simpan</button>
                                     </div>
                                 </div>
@@ -423,7 +423,7 @@
                         }
 
                         console.log(data)
-
+                        $('#buttonsimpan').prop('disabled', true);
 
                         $.ajax({
                             method: 'post',
@@ -451,6 +451,7 @@
                                 window.location.href = '/pembelian'
                             },
                             error: function (response) {
+                                $('#buttonsimpan').prop('disabled', false);
                                 console.log(response)
                                 Swal.fire({
                                     icon: 'error',

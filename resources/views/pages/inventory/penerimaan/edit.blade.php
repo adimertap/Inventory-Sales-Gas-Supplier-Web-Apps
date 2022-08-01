@@ -51,7 +51,7 @@
                                     <div class="d-flex justify-content-between">
                                         <a href="{{ route('penerimaan.index') }}" class="btn btn-sm btn-light"
                                             type="button">Kembali</a>
-                                        <button class="btn btn-primary btn-sm" type="button"
+                                        <button class="btn btn-primary btn-sm" type="button" id="buttonsimpan"
                                             onclick="SimpanData(event, {{ $penerimaan->id_penerimaan }})">Simpan</button>
                                     </div>
                                 </div>
@@ -457,7 +457,7 @@
                         }
 
                         console.log(data)
-
+                        $('#buttonsimpan').prop('disabled', true);
 
                         $.ajax({
                             method: 'put',
@@ -485,6 +485,7 @@
                                 window.location.href = '/penerimaan'
                             },
                             error: function (response) {
+                                $('#buttonsimpan').prop('disabled', false);
                                 console.log(response)
                                 Swal.fire({
                                     icon: 'error',

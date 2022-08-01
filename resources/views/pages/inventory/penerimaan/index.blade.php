@@ -285,7 +285,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-danger" type="submit">Tidak Lengkap</button>
-                <button href="#" onclick="lengkap(event)" class="btn btn-success" type="button">
+                <button href="#" onclick="lengkap(event)" class="btn btn-success" id="buttonsimpan" type="button">
                     <span style="display: none" id="pembelian_id2"></span> Ya! Lengkap</button>
             </div>
             </form>
@@ -305,7 +305,7 @@
         }
 
         console.log(data)
-
+        $('#buttonsimpan').prop('disabled', true);
         $.ajax({
             method: 'post',
             url: '/penerimaan/lengkap/' + id,
@@ -332,6 +332,7 @@
                 window.location.href = '/penerimaan'
             },
             error: function (response) {
+                $('#buttonsimpan').prop('disabled', false);
                 console.log(response)
                 Swal.fire({
                     icon: 'error',
@@ -362,7 +363,7 @@
             $('#pembelian_id').val(id_pembelian)
             $('#pembelian_id2').html(id_pembelian)
             $('#ModalProses').modal('show');
-
+            
             $('#prosesForm').attr('action', '/penerimaan/proses/' + id_pembelian)
         })
 

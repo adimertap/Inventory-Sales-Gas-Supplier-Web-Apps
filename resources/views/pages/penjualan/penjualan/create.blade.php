@@ -70,7 +70,7 @@
                                     <div class="d-flex justify-content-between">
                                         <a href="{{ route('penjualan.index') }}" class="btn btn-sm btn-light"
                                             type="button">Kembali</a>
-                                        <button class="btn btn-primary btn-sm" type="button"
+                                        <button class="btn btn-primary btn-sm" type="button" id="buttonsimpan"
                                             onclick="SimpanData(event, {{ $idbaru }})">Simpan</button>
                                     </div>
                                 </div>
@@ -194,9 +194,9 @@
                                 </div> @enderror
                             </div>
                             <div class="form-group col-3">
-                                <label class="small mb-1 mr-1" for="kode">Kode</label><span class="mr-4 mb-3"
+                                <label class="small mb-1 mr-1" for="code">Kode</label><span class="mr-4 mb-3"
                                     style="color: red">*</span>
-                                <select name="kode" id="kode" class="form-control" required>
+                                <select name="code" id="code" class="form-control" required>
                                     <option>Kode</option>
                                     <option value="S">S</option>
                                     <option value="A">A</option>
@@ -479,12 +479,8 @@
                 var status_bayar =  $('#status_bayar').find("option:selected").val();
                 var dataform2 = []
                 var role = form.find('input[name="role_pegawai"]').val()
-                if(role == 'Owner'){
-                    var id_pegawai = $('#id_pegawai').find("option:selected").val();
-                }else{
-                    var id_pegawai = form.find('input[name="id_pegawai"]').val()
-                }
-
+                var id_pegawai = $('#id_pegawai').find("option:selected").val();
+               
                 if (tanggal_penjualan == '') {
                     Swal.fire({
                         icon: 'error',
@@ -570,6 +566,7 @@
 
                         console.log(data)
 
+                        $('#buttonsimpan').prop('disabled', true);
 
                         $.ajax({
                             method: 'post',
@@ -597,6 +594,7 @@
                                 window.location.href = '/penjualan'
                             },
                             error: function (response) {
+                                $('#buttonsimpan').prop('disabled', false);
                                 console.log(response)
                                 Swal.fire({
                                     icon: 'error',

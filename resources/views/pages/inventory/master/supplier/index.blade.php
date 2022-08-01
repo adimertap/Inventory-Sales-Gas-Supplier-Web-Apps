@@ -157,22 +157,20 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label class="small mb-1 mr-1" for="email_supplier">Email</label><span class="mr-4 mb-3"
-                                        style="color: red">*</span>
+                                    <label class="small mb-1 mr-1" for="email_supplier">Email</label>
                                     <input class="form-control" name="email_supplier" type="email_supplier"
                                         placeholder="Input Email" value="{{ old('email_supplier') }}"
-                                        class="form-control @error('email_supplier') is-invalid @enderror" required>
+                                        class="form-control @error('email_supplier') is-invalid @enderror">
                                     @error('email_supplier')<div class="text-danger small mb-1">{{ $message }}
                                     </div> @enderror
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label class="small mb-1 mr-1" for="no_hp_supplier">Nomor Telephone</label><span
-                                        class="mr-4 mb-3" style="color: red">*</span>
+                                    <label class="small mb-1 mr-1" for="no_hp_supplier">Nomor Telephone</label>
                                     <input class="form-control" name="no_hp_supplier" type="number"
                                         placeholder="Input No. Telephone" value="{{ old('no_hp_supplier') }}"
-                                        class="form-control @error('no_hp_supplier') is-invalid @enderror" required>
+                                        class="form-control @error('no_hp_supplier') is-invalid @enderror">
                                     @error('no_hp_supplier')<div class="text-danger small mb-1">{{ $message }}
                                     </div> @enderror
                                 </div>
@@ -182,7 +180,7 @@
                             <label class="small mb-1 mr-1" for="id_jenis_supplier">Pilih Jenis Supplier</label><span
                                 class="mr-4 mb-3" style="color: red">*</span>
                             <select class="form-control" name="id_jenis_supplier" class="form-control"
-                                id="id_jenis_supplier">
+                                id="id_jenis_supplier" required>
                                 <option>Pilih Jenis</option>
                                 @foreach ($jenis as $tes)
                                 <option value="{{ $tes->id_jenis_supplier }}">{{ $tes->nama_jenis }}
@@ -238,18 +236,16 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label class="small mb-1 mr-1" for="email_supplier">Email</label><span class="mr-4 mb-3"
-                                        style="color: red">*</span>
+                                    <label class="small mb-1 mr-1" for="email_supplier">Email</label>
                                     <input class="form-control" name="email_supplier" type="email_supplier" id="femail"
-                                        placeholder="Input Email Supplier" value="{{ old('email_supplier') }}" required>
+                                        placeholder="Input Email Supplier" value="{{ old('email_supplier') }}">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label class="small mb-1 mr-1" for="no_hp_supplier">Nomor Telephone</label><span
-                                        class="mr-4 mb-3" style="color: red">*</span>
+                                    <label class="small mb-1 mr-1" for="no_hp_supplier">Nomor Telephone</label>
                                     <input class="form-control" name="no_hp_supplier" type="number" id="fphone"
-                                        placeholder="Input No. Telephone" value="{{ old('no_hp_supplier') }}" required>
+                                        placeholder="Input No. Telephone" value="{{ old('no_hp_supplier') }}">
                                 </div>
                             </div>
                         </div>
@@ -257,7 +253,7 @@
                             <label class="small mb-1 mr-1" for="id_jenis_supplier">Pilih Jenis Supplier</label><span
                                 class="mr-4 mb-3" style="color: red">*</span>
                             <select class="form-control" name="id_jenis_supplier" class="form-control"
-                                id="fjenis">
+                                id="fjenis" required>
                                 <option value="" id="tes">Pilih Jenis</option>
                                 @foreach ($jenis as $tes)
                                 <option value="{{ $tes->id_jenis_supplier }}">{{ $tes->nama_jenis }}
