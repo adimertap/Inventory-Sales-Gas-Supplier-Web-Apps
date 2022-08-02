@@ -33,10 +33,8 @@
                         <p class="text-gray-700">Halaman ini menampilkan seluruh laporan produk pada Perusahaan Anda!,
                             mulai dari jumlah masuk hingga jumlah keluar</p>
                         <hr>
-                        <a class="btn btn-primary btn-sm px-3 py-2" href="{{ route('cetak-kartu-pdf') }}">
-                            Download Laporan Stok
-                            <i class="fas fa-print ml-3"></i>
-                        </a>
+                        <button class="btn btn-primary btn-sm px-3 py-2" type="button" data-toggle="modal"
+                        data-target="#ModalFilter">Download Laporan Stok <i class="fas fa-print ml-3"></i></button>
                     </div>
                     <div class="col d-none d-lg-block mt-xxl-n4"><img class="img-fluid px-xl-2 mt-xxl-n5" width="250"
                             src="{{ asset('assets/inventory2.png') }}"></div>
@@ -161,6 +159,100 @@
             <div class="modal-footer d-flex justify-content-between">
                 <button class="btn btn-light" type="button" data-dismiss="modal">Kembali</button>
                 <button class="btn btn-danger-soft text-danger" type="submit">Saya Mengerti, Reset Stok</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="ModalFilter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white">Filter Data</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('kartu-excel') }}" id="form_excel" method="GET">
+                    <div class="col-12 border p-2 mr-1">
+                        <h5 class="text-primary">Filter Laporan Stok!</h5>
+                        <p class="small">Filter Laporan Pembelian Sesuai dengan Kriteria Inputan</p>
+                        <div class="row input-daterange">
+                            <div class="form-group col-6">
+                                <label class="small">Start Date</label>
+                                <div class="input-group input-group-joined">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i data-feather="search"></i>
+                                        </span>
+                                    </div>
+                                    <input type="date" name="from_date_export" id="from_date_export"
+                                        class="form-control" placeholder="From Date" />
+                                </div>
+                            </div>
+                            <div class="form-group col-6">
+                                <label class="small">End Date</label>
+                                <div class="input-group input-group-joined">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i data-feather="search"></i>
+                                        </span>
+                                    </div>
+                                    <input type="date" name="to_date_export" id="to_date_export" class="form-control"
+                                        placeholder="To Date" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="small mb-1 mr-1" for="filter_kartu">Jenis Kartu</label><span
+                                class="mr-4 mb-3" style="color: red">*</span>
+                            <select class="form-control" name="filter_kartu" class="form-control"
+                                id="filter_kartu">
+                                <option value="">Penjualan dan Penerimaan</option>
+                                <option value="Penjualan">Hanya Penjualan</option>
+                                <option value="Penerimaan">Hanya Penerimaan</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-6">
+                                <label class="small mb-1 mr-1" for="id_produk">Produk</label><span class="mr-4 mb-3"
+                                    style="color: red">*</span>
+                                <select class="form-control" name="id_produk" class="form-control" id="id_produk">
+                                    <option value="">Pilih Produk</option>
+                                    @foreach ($produk as $pro)
+                                    <option value="{{ $pro->nama_produk }}">{{ $pro->nama_produk }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label class="small mb-1 mr-1" for="id_kategori">Kategori</label><span class="mr-4 mb-3"
+                                    style="color: red">*</span>
+                                <select class="form-control" name="id_kategori" class="form-control" id="id_kategori">
+                                    <option value="">Pilih Kategori</option>
+                                    @foreach ($kategori as $kat)
+                                    <option value="{{ $kat->id_kategori }}">{{ $kat->nama_kategori }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="small mb-1 mr-1" for="id_pegawai">Pegawai</label><span class="mr-4 mb-3"
+                                style="color: red">*</span>
+                            <select class="form-control" name="id_pegawai" class="form-control" id="id_pegawai">
+                                <option value="">Pilih Pegawai</option>
+                                @foreach ($pegawai as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Filter</button>
             </div>
             </form>
         </div>

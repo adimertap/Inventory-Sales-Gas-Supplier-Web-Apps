@@ -120,6 +120,7 @@ Route::group(['middleware' => 'auth'], function () {
         // EXCEL
         Route::get('/pembelian/download/excel', [App\Http\Controllers\Inventory\ReportPembelianController::class, 'excel'])->name('pembelian-excel');
         Route::get('/penjualan/download/excel', [App\Http\Controllers\Penjualan\ReportPenjualanController::class, 'excel'])->name('penjualan-excel');
+        Route::get('/kartu/download/excel', [App\Http\Controllers\Inventory\KartuGudangController::class, 'excel'])->name('kartu-excel');
     });
 });
 

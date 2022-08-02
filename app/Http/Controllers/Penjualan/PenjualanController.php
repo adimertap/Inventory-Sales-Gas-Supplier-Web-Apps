@@ -106,10 +106,10 @@ class PenjualanController extends Controller
                 $kartu = new KartuGudang();
                 $kartugudangterakhir = $produk->Kartugudangsaldoakhir;
                 if($kartugudangterakhir != null){
-                    $kartu->saldo_akhir = $kartugudangterakhir->saldo_akhir + $item['jumlah_jual'];
+                    $kartu->saldo_akhir = $kartugudangterakhir->saldo_akhir - $item['jumlah_jual'];
                 }
                 if($kartugudangterakhir == null)
-                    $kartu->saldo_akhir = $item['jumlah_jual'];
+                    $kartu->saldo_akhir = 0 - $item['jumlah_jual'];
                 $kartu->kode_transaksi = $penjualan->kode_penjualan;
                 $kartu->tanggal_transaksi = $penjualan->tanggal_penjualan;
                 $kartu->jumlah_keluar = $kartu->jumlah_keluar + $item['jumlah_jual'];
@@ -228,10 +228,10 @@ class PenjualanController extends Controller
                 $kartu = new KartuGudang();
                 $kartugudangterakhir = $produk->Kartugudangsaldoakhir;
                 if($kartugudangterakhir != null){
-                    $kartu->saldo_akhir = $kartugudangterakhir->saldo_akhir + $item['jumlah_jual'];
+                    $kartu->saldo_akhir = $kartugudangterakhir->saldo_akhir - $item['jumlah_jual'];
                 }
                 if($kartugudangterakhir == null)
-                    $kartu->saldo_akhir = $item['jumlah_jual'];
+                    $kartu->saldo_akhir = 0 - $item['jumlah_jual'];
                 $kartu->kode_transaksi = $penjualan->kode_penjualan;
                 $kartu->tanggal_transaksi = $penjualan->tanggal_penjualan;
                 $kartu->jumlah_keluar = $kartu->jumlah_keluar + $item['jumlah_jual'];
@@ -250,8 +250,6 @@ class PenjualanController extends Controller
                 $check->harga_jual = $item['harga_jual'];
                 $check->update();
             }
-       
-  
         }
 
         $penjualan->grand_total = $total_penjualan;
@@ -279,7 +277,7 @@ class PenjualanController extends Controller
 
         foreach($penjualan->detail as $key=>$item){
             $produk = Produk::where('id_produk', $item['id_produk'])->first();
-            $produk->stok = $produk->stok - $item->pivot['jumlah_jual'];
+            $produk->stok = $produk->stok + $item->pivot['jumlah_jual'];
             
             if($produk->stok >= $produk->jumlah_minimal){
                 $produk->status_jumlah = 'Cukup';

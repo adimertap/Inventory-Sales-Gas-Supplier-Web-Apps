@@ -41,10 +41,6 @@
                                     
                                 </div>
                             </div>
-                            <a class="btn btn-primary btn-sm px-3 py-2" href="{{ route('cetak-kartu-detail-pdf', $produk->id_produk) }}">
-                                Download Laporan Stok
-                                <i class="fas fa-print ml-3"></i>
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -102,7 +98,7 @@
                                             <th class="sorting text-center" tabindex="0" aria-controls="dataTable"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Salary: activate to sort column ascending"
-                                                style="width: 100px;">Harga Beli</th>
+                                                style="width: 100px;">Harga Beli/Jual</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -119,7 +115,12 @@
                                             <td class="text-center">{{ $item->jumlah_masuk }}</td>
                                             <td class="text-center">{{ $item->jumlah_keluar }}</td>
                                             <td class="text-center">{{ $item->saldo_akhir }}</td>
+                                            @if ($item->Supplier != '')
                                             <td class="text-center">Rp.{{ number_format($item->harga_beli)}}</td>
+                                            @else
+                                            <td class="text-center">Rp.{{ number_format($item->harga_jual)}}</td>
+                                            @endif
+                                        
                                         </tr>
                                         @empty
 

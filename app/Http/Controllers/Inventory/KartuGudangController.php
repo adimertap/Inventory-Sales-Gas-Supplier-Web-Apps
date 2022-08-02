@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers\Inventory;
 
+use App\Exports\ExcelKartuGabungan;
+use App\Exports\ExcelKartuPenerimaan;
+use App\Exports\ExcelKartuPenjualan;
+use App\Exports\ExcelPenjualan;
 use App\Http\Controllers\Controller;
 use App\Models\Inventory\KartuGudang;
+use App\Models\Master\Category;
 use App\Models\Master\Produk;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,7 +28,15 @@ class KartuGudangController extends Controller
         $produk = Produk::get();
         $today = Carbon::now()->isoFormat('dddd');
         $tanggal = Carbon::now()->format('j F Y');
-        return view('pages.inventory.kartugudang.index', compact('produk','today','tanggal'));
+
+        $pegawai = User::get();
+        $produk = Produk::get();
+        $kategori = Category::get();
+
+
+        return view('pages.inventory.kartugudang.index', compact('produk','today','tanggal'
+            ,'produk','pegawai','kategori'
+        ));
     }
 
     public function cetak_pdf()
@@ -58,6 +72,48 @@ class KartuGudangController extends Controller
 
         $pdf = Pdf::loadview('pdf.kartu_pdf_penjualan',['kartu'=>$kartu], ['produk'=>$produk]);
     	return $pdf->download('laporan-kartu-stok-penjualan.pdf');
+    }
+
+    public function excel(Request $request)
+    {
+      
+        $kartu = KartuGudang::join('tb_master_produk', 'tb_kartu_gudang.id_produk','tb_master_produk.id_produk')
+        ->leftjoin('tb_master_kategori', 'tb_master_produk.kategori_id','tb_master_kategori.id_kategori');
+        if($request->from){
+            $kartu->where('tanggal_transaksi', '>=', $request->from);
+        }
+        if($request->to){
+            $kartu->where('tanggal_transaksi', '<=', $request->to);
+        }
+        if($request->id_produk){
+            $kartu->where('nama_produk', $request->id_produk);
+        }
+        if($request->id_pegawai){
+            $kartu->where('id', $request->id_pegawai);
+        }
+        if($request->id_kategori){
+            $kartu->where('id_kategori', $request->id_kategori);
+        }
+        if($request->filter_kartu == 'Penjualan'){
+            $kartu->where('jenis_kartu', '=', 'Penjualan');
+        }
+        if($request->filter_kartu == 'Penerimaan'){
+            $kartu->where('jenis_kartu', '=', 'Penerimaan');
+        } 
+        $kartu = $kartu->get();
+        // return $kartu;
+        if(count($kartu) == 0){
+            Alert::warning('Tidak Ditemukan Data', 'Data yang Anda Cari Tidak Ditemukan');
+            return redirect()->back();
+        }else{
+            if($request->filter_kartu == 'Penjualan'){
+                return new ExcelKartuPenjualan($kartu);
+            }elseif($request->filter_kartu == 'Penerimaan'){
+                return new ExcelKartuPenerimaan($kartu);
+            }else{
+                return new ExcelKartuGabungan($kartu);
+            }
+        }
     }
  
 
