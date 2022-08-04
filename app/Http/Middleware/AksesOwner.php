@@ -20,7 +20,7 @@ class AksesOwner
     public function handle(Request $request, Closure $next)
     {
         $pegawai_role = User::where('id', Auth::user()->id)->first()->role;
-        if($pegawai_role == 'Owner'){
+        if($pegawai_role == 'Owner' || $pegawai_role == 'Admin'){
             return $next($request);
         }
 
