@@ -172,8 +172,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label class="small mb-1 mr-1" for="email_customer">Email</label><span class="mr-4 mb-3"
-                                        style="color: red">*</span>
+                                    <label class="small mb-1 mr-1" for="email_customer">Email</label>
                                     <input class="form-control" name="email_customer" type="email_customer"
                                         placeholder="Input Email" value="{{ old('email_customer') }}"
                                         class="form-control @error('email_customer') is-invalid @enderror">
@@ -183,8 +182,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label class="small mb-1 mr-1" for="no_hp_customer">Nomor Telephone</label><span
-                                        class="mr-4 mb-3" style="color: red">*</span>
+                                    <label class="small mb-1 mr-1" for="no_hp_customer">Nomor Telephone</label>
                                     <input class="form-control" name="no_hp_customer" type="number"
                                         placeholder="Input No. Telephone" value="{{ old('no_hp_customer') }}"
                                         class="form-control @error('no_hp_customer') is-invalid @enderror">
@@ -254,18 +252,16 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label class="small mb-1 mr-1" for="email_customer">Email</label><span class="mr-4 mb-3"
-                                        style="color: red">*</span>
+                                    <label class="small mb-1 mr-1" for="email_customer">Email</label>
                                     <input class="form-control" name="email_customer" type="email_customer" id="femail"
-                                        placeholder="Input Email Supplier" value="{{ old('email_customer') }}" required>
+                                        placeholder="Input Email Supplier" value="{{ old('email_customer') }}">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label class="small mb-1 mr-1" for="no_hp_customer">Nomor Telephone</label><span
-                                        class="mr-4 mb-3" style="color: red">*</span>
+                                    <label class="small mb-1 mr-1" for="no_hp_customer">Nomor Telephone</label>
                                     <input class="form-control" name="no_hp_customer" type="number" id="fphone"
-                                        placeholder="Input No. Telephone" value="{{ old('no_hp_customer') }}" required>
+                                        placeholder="Input No. Telephone" value="{{ old('no_hp_customer') }}" >
                                 </div>
                             </div>
                         </div>
