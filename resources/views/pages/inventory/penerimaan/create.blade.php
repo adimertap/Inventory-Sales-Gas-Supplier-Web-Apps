@@ -66,7 +66,7 @@
                         <div class="card-body">
                             <div class="row justify-content-center">
                                 <div class="col-xxl-12 col-xl-8">
-                                    <h6 class="card-title">Total Produk Pembelian: <span class="text-primary">{{ $total_produk }} Produk</span> </h6>
+                                    {{-- <h6 class="card-title">Total Produk Pembelian: <span class="text-primary">{{ $total_produk }} Produk</span> </h6> --}}
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
                                             <label class="small mb-1 mr-1" for="id_supplier">Supplier</label><span

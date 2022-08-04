@@ -61,9 +61,7 @@ class PenerimaanController extends Controller
         $blt = date('y-m');
         $kode_penerimaan = 'RCV'.$blt.'-'.$idbaru;
 
-        $total_produk = Pembelian::join('tb_detail_pembelian','tb_pembelian.id_pembelian','tb_detail_pembelian.id_pembelian')->count();
-
-        return view('pages.inventory.penerimaan.create', compact('pembelian','total_produk','idbaru','kode_penerimaan'));
+        return view('pages.inventory.penerimaan.create', compact('pembelian','idbaru','kode_penerimaan'));
         
     }
 
@@ -219,10 +217,11 @@ class PenerimaanController extends Controller
                     $detail->kode_pembelian = $pembelian->kode_pembelian;
                     $detail->save();
                 }else{
-                    $total_penerimaan = $total_penerimaan + $det['total_diterima'];
+                    $tes123 = $item->pivot['total_order'] - $det['total_diterima'];
+                    $total_penerimaan = $total_penerimaan + $tes123;
                     // MASTER PRODUK
                     $produk = Produk::where('id_produk', $det['id_produk'])->first();
-                    $produk->stok = $produk->stok + $det['jumlah_diterima'];
+                    $produk->stok = $produk->stok + $item->pivot['qty_sementara'];
                     if($produk->stok >= $produk->jumlah_minimal){
                         $produk->status_jumlah = 'Cukup';
                     }else if($produk->stok == 0){
@@ -236,14 +235,14 @@ class PenerimaanController extends Controller
                     $kartu = new KartuGudang();
                     $kartugudangterakhir = $produk->Kartugudangsaldoakhir;
                     if($kartugudangterakhir != null){
-                        $kartu->saldo_akhir = $kartugudangterakhir->saldo_akhir + $det['jumlah_diterima'];
+                        $kartu->saldo_akhir = $kartugudangterakhir->saldo_akhir + $item->pivot['qty_sementara'];
                     }
                     if($kartugudangterakhir == null)
-                        $kartu->saldo_akhir = $det['jumlah_diterima'];
+                        $kartu->saldo_akhir = $item->pivot['qty_sementara'];
                     $kartu->kode_transaksi = $penerimaan->kode_penerimaan;
                     $kartu->tanggal_transaksi = $penerimaan->tanggal_penerimaan;
-                    $kartu->jumlah_masuk = $kartu->jumlah_masuk + $det['jumlah_diterima'];
-                    $kartu->harga_beli = $kartu->harga_beli + $det['harga_diterima'];
+                    $kartu->jumlah_masuk = $kartu->jumlah_masuk + $item->pivot['qty_sementara'];
+                    $kartu->harga_beli = $kartu->harga_beli + $item->pivot['harga_beli'];
                     $kartu->id_supplier = $pembelian->Supplier->id_supplier;
                     $kartu->id_produk = $det['id_produk'];
                     $kartu->jenis_kartu = 'Penerimaan';
@@ -251,16 +250,16 @@ class PenerimaanController extends Controller
         
                     // DETAIL PEMBELIAN
                     $detailpembelian = DetailPembelian::where('id_pembelian', $pembelian->id_pembelian)->where('id_produk', $det['id_produk'])->first();
-                    $detailpembelian->qty_sementara = $detailpembelian->qty_sementara - $det['jumlah_diterima'];
+                    $detailpembelian->qty_sementara = $detailpembelian->qty_sementara - $item->pivot['qty_sementara'];
                     $detailpembelian->save();
         
                     $detail = new DetailPenerimaan;
                     $detail->id_penerimaan = $penerimaan->id_penerimaan;
                     $detail->id_produk = $det['id_produk'];
-                    $detail->jumlah_order = $det['jumlah_order'];
-                    $detail->jumlah_diterima = $det['jumlah_diterima'];
-                    $detail->harga_diterima = $det['harga_diterima'];
-                    $detail->total_diterima = $det['total_diterima'];
+                    $detail->jumlah_order = $item->pivot['qty_sementara'];
+                    $detail->jumlah_diterima = $item->pivot['qty_sementara'];
+                    $detail->harga_diterima = $item->pivot['harga_beli'];
+                    $detail->total_diterima = $item->pivot['total_order'] - $det['total_diterima'];
                     $detail->kode_pembelian = $pembelian->kode_pembelian;
                     $detail->save();
                 }
