@@ -75,6 +75,9 @@
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Office: activate to sort column ascending"
                                                 style="width: 40px;">Kode Penjualan</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                colspan="1" aria-label="Office: activate to sort column ascending"
+                                                style="width: 40px;">Pegawai</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 120px;">Nama Customer</th>
@@ -94,6 +97,7 @@
                                         <tr role="row" class="odd">
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}</th>
                                             <td>{{ $item->kode_penjualan }}</td>
+                                            <td>{{ $item->Pegawai->name }}</td>
                                             <td>{{ $item->Customer->nama_customer }}</td>
                                             <td class="text-center">Rp. {{ number_format($item->grand_total) }}</td>
                                             <td class="text-center">
