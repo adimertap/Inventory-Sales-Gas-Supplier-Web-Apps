@@ -58,11 +58,10 @@
                 </div>
             </div>
             <div class="col-xxl-4 col-xl-4 mb-4">
-                <a class="card lift" href="{{ route('pembelian.index') }}">
+                <a class="card lift" href="{{ route('penjualan.index') }}">
                     <div class="card-body d-flex justify-content-center flex-column">
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="mr-3">
-                                
                                 <h5>Penjualan Produk</h5>
                                 <div class="text-muted">Catat Penjualan Produk Anda Secara Cepat dan Tepat, <b class="text-primary">Klik Disini!</b></div>
                             </div>
