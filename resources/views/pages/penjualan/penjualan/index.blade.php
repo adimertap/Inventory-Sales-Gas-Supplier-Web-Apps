@@ -10,7 +10,11 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"></div>
-                            Penjualan Saya Hari Ini
+                            @if (Auth::user()->role == 'Owner')
+                            Penjualan Perusahaan
+                            @else
+                            Penjualan Saya Keseluruhan
+                            @endif
                         </h1>
                     </div>
                 </div>
@@ -43,7 +47,12 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
+                                @if (Auth::user()->role == 'Owner')
+                                <div class="small font-weight-bold text-primary mb-1">Total Penjualan Perusahaan</div>
+                                @else
                                 <div class="small font-weight-bold text-primary mb-1">Total Penjualan Anda Hari Ini</div>
+                                @endif
+                              
                                 <div class="h5">{{ $penjualan_hari }} Penjualan</div>
                                 <div class="text-xs font-weight-bold text-success d-inline-flex align-items-center">
                                     Count Penjualan
@@ -86,7 +95,7 @@
                                                 style="width: 120px;">Nama Customer</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
-                                                style="width: 40px;">Grand Total</th>
+                                                style="width: 80px;">Grand Total</th>
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 40px;">Status</th>
@@ -100,7 +109,7 @@
                                         <tr role="row" class="odd">
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}</th>
                                             <td>{{ $item->kode_penjualan }}</td>
-                                            <td>{{ $item->tanggal_penjualan }}</td>
+                                            <td>{{ date('d-M-Y', strtotime($item->tanggal_penjualan)) }}</td>
                                             <td>{{ $item->Pegawai->name }}</td>
                                             <td>{{ $item->Customer->nama_customer }}</td>
                                             <td class="text-center">Rp. {{ number_format($item->grand_total) }}</td>
@@ -142,7 +151,7 @@
                                         @endforelse
                                     </tbody>
                                     <tr> 
-                                        <td colspan="3" class="text-center"> Grand Total Keseluruhan</td>
+                                        <td colspan="5" class="text-center"> Grand Total Keseluruhan</td>
                                         <td colspan="1" class="text-center">Rp. {{ number_format($total) }}</td>
                                         <td colspan="2"></td>
                                     </tr>

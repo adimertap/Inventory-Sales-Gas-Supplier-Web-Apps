@@ -72,7 +72,7 @@
                             @forelse ($pembelian as $tes)
                             <tr>
                                 <td>{{ $tes->kode_pembelian }}</td>
-                                <td>{{ $tes->tanggal_pembelian }}</td>
+                                <td>{{ date('d-M-Y', strtotime($item->tanggal_pembelian)) }}</td>
                                 <td>
                                     <button class="btn btn-primary btn-sm prosesBtn small p-0"
                                         value="{{ $tes->id_pembelian }}" type="button" data-bs-toggle="tooltip"
@@ -103,18 +103,22 @@
                                                 colspan="1" aria-sort="ascending"
                                                 aria-label="Name: activate to sort column descending"
                                                 style="width: 20px;">No</th>
-                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
-                                                colspan="1" aria-label="Office: activate to sort column ascending"
-                                                style="width: 80px;">Pegawai</th>
-                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Office: activate to sort column ascending"
                                                 style="width: 40px;">Kode Pembelian</th>
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 90px;">Kode Penerimaan</th>
+                                                   
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                            colspan="1" aria-label="Office: activate to sort column ascending"
+                                            style="width: 40px;">Tanggal Penerimaan</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Office: activate to sort column ascending"
-                                                style="width: 40px;">Tanggal Penerimaan</th>
+                                                style="width: 80px;">Pegawai</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                colspan="1" aria-label="Office: activate to sort column ascending"
+                                                style="width: 80px;">Supplier</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                 colspan="1" aria-label="Start date: activate to sort column ascending"
                                                 style="width: 40px;">Total Penerimaan</th>
@@ -130,10 +134,11 @@
                                         @forelse ($penerimaan as $item)
                                         <tr role="row" class="odd">
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}</th>
-                                            <td>{{ $item->Pegawai->name }}</td>
                                             <td>{{ $item->Pembelian->kode_pembelian }}</td>
                                             <td>{{ $item->kode_penerimaan }}</td>
-                                            <td>{{ $item->tanggal_penerimaan }}</td>
+                                            <td>{{ date('d-M-Y', strtotime($item->tanggal_penerimaan)) }}</td>
+                                            <td>{{ $item->Pegawai->name }}</td>
+                                            <td>{{ $item->Pembelian->Supplier->nama_supplier }}</td>
                                             <td>Rp. {{ number_format($item->grand_total) }}</td>
                                             <td class="text-center">
                                                 @if($item->status_pembayaran == 'Dibayar')

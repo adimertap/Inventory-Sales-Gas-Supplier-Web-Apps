@@ -93,6 +93,9 @@
                                 Penjualan Pegawai
                             </a>
                             @else
+                            <a class="nav-link " href="{{ route('penjualan-harian-pegawai') }}">
+                                Penjualan Harian Saya
+                            </a>
                             <a class="nav-link " href="{{ route('penjualan.index') }}">
                                 Penjualan Saya
                             </a>

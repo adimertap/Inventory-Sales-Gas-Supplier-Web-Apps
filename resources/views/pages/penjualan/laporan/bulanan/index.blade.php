@@ -56,7 +56,7 @@
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}</th>
                                             <td class="text-center">{{ $item->tahun }}</td>
                                             <td class="text-center">{{ $item->bulan }}</td>
-                                            <td class="text-center">{{ $item->jumlah_penjualan }}</td>
+                                            <td class="text-center">{{ $item->jumlah_penjualan }} Transaksi</td>
                                             <td class="text-center">Rp. {{ number_format($item->grand_totals) }}</td>
                                             <td class="text-center">
                                                 <a href="{{ route('laporan-penjualan-bulanan.show', $item->bulan) }}"

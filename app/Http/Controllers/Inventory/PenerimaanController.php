@@ -23,8 +23,8 @@ class PenerimaanController extends Controller
      */
     public function index()
     {
-        $penerimaan = Penerimaan::get();
-        $pembelian = Pembelian::where('status','Dikirim')->get();
+        $penerimaan = Penerimaan::orderBy('tanggal_penerimaan','DESC')->get();
+        $pembelian = Pembelian::where('status','Dikirim')->orderBy('tanggal_pembelian','DESC')->get();
         $count = Penerimaan::where('tanggal_penerimaan', Carbon::now()->format('Y-m-d'))->count();
         $count_proses = Pembelian::where('status','Dikirim')->count();
 

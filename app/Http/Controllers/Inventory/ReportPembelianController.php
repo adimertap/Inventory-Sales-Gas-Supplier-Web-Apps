@@ -36,7 +36,7 @@ class ReportPembelianController extends Controller
         if($request->to){
             $pembelian->where('tanggal_pembelian', '<=', $request->to);
         }
-        $pembelian = $pembelian->get();
+        $pembelian = $pembelian->OrderBy('updated_at','DESC')->get();
         $total = $pembelian->sum('grand_total');
         $jumlah = $pembelian->count();
         
@@ -61,48 +61,7 @@ class ReportPembelianController extends Controller
         return redirect()->route('laporan-pembelian.index');
     }
 
-    public function pembelian_seluruh_Pdf(Request $request)
-    {
-        $pembelian = Pembelian::where('status','Diterima')->join('tb_detail_pembelian','tb_pembelian.id_pembelian','tb_detail_pembelian.id_pembelian')
-        ->join('tb_master_produk', 'tb_detail_pembelian.id_produk','tb_master_produk.id_produk')
-        ->join('tb_master_supplier','tb_pembelian.supplier_id','tb_master_supplier.id_supplier')
-        ->leftjoin('tb_master_jenis_supplier', 'tb_master_supplier.jenis_id','tb_master_jenis_supplier.id_jenis_supplier')
-        ->leftjoin('tb_master_kategori', 'tb_master_produk.kategori_id','tb_master_kategori.id_kategori');
-        if($request->from){
-            $pembelian->where('tanggal_pembelian', '>=', $request->from);
-        }
-        if($request->to){
-            $pembelian->where('tanggal_pembelian', '<=', $request->to);
-        }
-        if($request->id_supplier){
-            $pembelian->where('supplier_id', '=', $request->id_supplier);
-        }
-        if($request->jenis_id){
-            $pembelian->where('jenis_id', $request->jenis_id);
-        }
-        if($request->id_produk){
-            $pembelian->where('nama_produk', $request->id_produk);
-        }
-        if($request->id_pegawai){
-            $pembelian->where('id', $request->id_pegawai);
-        }
-        if($request->id_kategori){
-            $pembelian->where('id_kategori', $request->id_kategori);
-        }
-        $pembelian = $pembelian->get();
-        $total = $pembelian->sum('grand_total');
-        $jumlah = $pembelian->count('id_produk');
-
-
-        if(count($pembelian) == 0){
-            Alert::warning('Tidak Ditemukan Data', 'Data yang Anda Cari Tidak Ditemukan');
-            return redirect()->back();
-        }else{
-            $pdf = Pdf::loadview('pdf.pembelian.seluruh.pembelian_seluruh_pdf',['pembelian'=>$pembelian, 'total' =>$total,'jumlah' => $jumlah]);
-    	    return $pdf->download('Pembelian-Keseluruhan.pdf');
-        }
-    }
-
+    
     public function excel(Request $request)
     {
         $pembelian = Pembelian::where('status','Diterima')->join('tb_detail_pembelian','tb_pembelian.id_pembelian','tb_detail_pembelian.id_pembelian')
@@ -110,11 +69,11 @@ class ReportPembelianController extends Controller
         ->join('tb_master_supplier','tb_pembelian.supplier_id','tb_master_supplier.id_supplier')
         ->leftjoin('tb_master_jenis_supplier', 'tb_master_supplier.jenis_id','tb_master_jenis_supplier.id_jenis_supplier')
         ->leftjoin('tb_master_kategori', 'tb_master_produk.kategori_id','tb_master_kategori.id_kategori');
-        if($request->from){
-            $pembelian->where('tanggal_pembelian', '>=', $request->from);
+        if($request->from_date_export){
+            $pembelian->where('tanggal_pembelian', '>=', $request->from_date_export);
         }
-        if($request->to){
-            $pembelian->where('tanggal_pembelian', '<=', $request->to);
+        if($request->to_date_export){
+            $pembelian->where('tanggal_pembelian', '<=', $request->to_date_export);
         }
         if($request->id_supplier){
             $pembelian->where('supplier_id', '=', $request->id_supplier);
@@ -131,18 +90,62 @@ class ReportPembelianController extends Controller
         if($request->id_kategori){
             $pembelian->where('id_kategori', $request->id_kategori);
         }
-        $pembelian = $pembelian->get();
-        $grand_total = $pembelian->sum('grand_total');
-        $total_produk = $pembelian->count('id_produk');
-
-
-        if(count($pembelian) == 0){
+        $pembelian = $pembelian->orderBy('tanggal_pembelian','DESC')->get();
+     
+        
+        $produk = Pembelian::where('status','Diterima')->join('tb_detail_pembelian','tb_pembelian.id_pembelian','tb_detail_pembelian.id_pembelian')
+        ->join('tb_master_produk', 'tb_detail_pembelian.id_produk','tb_master_produk.id_produk')
+        ->join('tb_master_supplier','tb_pembelian.supplier_id','tb_master_supplier.id_supplier')
+        ->leftjoin('tb_master_jenis_supplier', 'tb_master_supplier.jenis_id','tb_master_jenis_supplier.id_jenis_supplier')
+        ->leftjoin('tb_master_kategori', 'tb_master_produk.kategori_id','tb_master_kategori.id_kategori')
+        ->selectRaw('nama_produk as nama, SUM(jumlah_order) as jumlah')
+        ->groupBy('nama_produk');
+        if($request->from_date_export){
+            $produk->where('tanggal_pembelian', '>=', $request->from_date_export);
+        }
+        if($request->to_date_export){
+            $produk->where('tanggal_pembelian', '<=', $request->to_date_export);
+        }
+        if($request->id_supplier){
+            $produk->where('supplier_id', '=', $request->id_supplier);
+        }
+        if($request->jenis_id){
+            $produk->where('jenis_id', $request->jenis_id);
+        }
+        if($request->id_produk){
+            $produk->where('nama_produk', $request->id_produk);
+        }
+        if($request->id_pegawai){
+            $produk->where('id', $request->id_pegawai);
+        }
+        if($request->id_kategori){
+            $produk->where('id_kategori', $request->id_kategori);
+        }
+        $produk = $produk->get();
+        
+        if(count($pembelian) == 0 && count($produk) == 0){
             Alert::warning('Tidak Ditemukan Data', 'Data yang Anda Cari Tidak Ditemukan');
             return redirect()->back();
         }else{
-            return new ExcelPembelian($pembelian, $grand_total);
+            if($request->radio_input == 'pdf'){
+                $pdf = Pdf::loadview('pdf.pembelian.seluruh.pembelian_seluruh_pdf',['pembelian'=>$pembelian, 'produk' =>$produk]);
+
+                if($request->from_date_export && $request->to_date_export){
+                    return $pdf->download('Laporan-Pembelian '.$request->from_date_export.' - '.$request->to_date_export.' .pdf');
+                }else{
+                    return $pdf->download('Laporan-Pembelian-Keseluruhan.pdf');
+                }
+                
+                Alert::success('Berhasil', 'Laporan Pembelian Berhasil Didownload');
+            }else{
+                if($request->from_date_export && $request->to_date_export){
+                    return Excel::download(new ExcelPembelian($pembelian, $produk), 'Laporan-Pembelian '.$request->from_date_export.' - '.$request->to_date_export.' .xlsx');
+                }else{
+                    return Excel::download(new ExcelPembelian($pembelian, $produk), 'Laporan-Pembelian-Keseluruhan.xlsx');
+                }
+            }
+            Alert::success('Berhasil', 'Laporan Pembelian Berhasil Didownload');
         }
-  
     }
 
 

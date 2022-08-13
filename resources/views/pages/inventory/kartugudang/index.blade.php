@@ -31,7 +31,7 @@
                     <div class="col">
                         <h2 class="text-primary">Selamat Datang, {{ Auth::user()->name }}!</h2>
                         <p class="text-gray-700">Halaman ini menampilkan seluruh laporan produk pada Perusahaan Anda!,
-                            mulai dari jumlah masuk hingga jumlah keluar</p>
+                            mulai dari jumlah masuk hingga jumlah keluar suatu produk</p>
                         <hr>
                         <button class="btn btn-primary btn-sm px-3 py-2" type="button" data-toggle="modal"
                         data-target="#ModalFilter">Download Laporan Stok <i class="fas fa-print ml-3"></i></button>

@@ -23,7 +23,7 @@ class PembelianController extends Controller
      */
     public function index()
     {
-        $pembelian = Pembelian::get();
+        $pembelian = Pembelian::orderBy('tanggal_pembelian','DESC')->get();
         $count = Pembelian::where('tanggal_pembelian', Carbon::now()->format('Y-m-d'))->count();
 
         return view('pages.inventory.pembelian.index', compact('pembelian','count'));

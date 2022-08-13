@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Events\AfterSheet;
@@ -10,17 +9,21 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
 
-class ExcelPembelian implements FromView, ShouldAutoSize, WithEvents
+class ExcelPembelianHarian implements FromView, ShouldAutoSize, WithEvents
 {
-    public function __construct($pembelian, $produk)
+    /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function __construct($pembelian, $produk, $hari)
     {
         $this->pembelian = $pembelian;
         $this->produk = $produk;
+        $this->hari = $hari;
     }
 
     public function view(): View
     {
-        return view('pdf.pembelian.seluruh.excel',['pembelian' => $this->pembelian, 'produk' => $this->produk]);
+        return view('pdf.pembelian.harian.excel',['pembelian' => $this->pembelian, 'produk' => $this->produk, 'hari' => $this->hari]);
     }
 
     public function registerEvents(): array

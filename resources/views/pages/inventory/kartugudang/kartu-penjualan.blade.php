@@ -36,8 +36,8 @@
                             <hr>
                             <div class="row align-items-center justify-content-between">
                                 <div class="col">
-                                    <h4 class="text-primary">Produk {{ $produk->nama_produk }}, Kategori {{ $produk->Kategori->nama_kategori }}</h4>
-                                    <p class="text-gray-700">Jumlah Stok: {{ $produk->stok }}</p>
+                                    <h2 class="text-primary">Produk {{ $produk->nama_produk }}, Kategori {{ $produk->Kategori->nama_kategori }}</h2>
+                                    <p class="text-gray-700">Jumlah Stok Produk ini: {{ $produk->stok }}</p>
                                     
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                                     cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th colspan="4" class="text-center">Transaksi</th>
+                                            <th colspan="4" class="text-center">Transaksi Penjualan</th>
                                             <th colspan="1" class="text-center">Jumlah</th>
                                             <th colspan="1" class="text-center">Saldo</th>
                                             <th colspan="1" class="text-center">Harga</th>
@@ -81,11 +81,11 @@
                                             <th class="sorting text-center" tabindex="0" aria-controls="dataTable"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Position: activate to sort column ascending"
-                                                style="width: 60px;">Tanggal Transaksi</th>
+                                                style="width: 80px;">Tanggal Penjualan</th>
                                             <th class="sorting text-center" tabindex="0" aria-controls="dataTable"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Position: activate to sort column ascending"
-                                                style="width: 6px;">Kode Transaksi</th>
+                                                style="width: 6px;">Kode Penjualan</th>
                                             <th class="sorting text-center" tabindex="0" aria-controls="dataTable"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Office: activate to sort column ascending"
@@ -98,7 +98,7 @@
                                             <th class="sorting text-center" tabindex="0" aria-controls="dataTable"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Salary: activate to sort column ascending"
-                                                style="width: 100px;">Harga Beli</th>
+                                                style="width: 100px;">Harga Jual</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -106,7 +106,7 @@
                                         <tr role="row" class="odd">
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}</th>
                                             <td class="text-center">{{ $item->Customer->nama_customer }}</td>
-                                            <td class="text-center">{{ $item->tanggal_transaksi }}</td>
+                                            <td class="text-center">Dijual pada {{ date('d-M-Y', strtotime($item->tanggal_transaksi)) }}</td>
                                             <td class="text-center">{{ $item->kode_transaksi }}</td>
                                             <td class="text-center">{{ $item->jumlah_keluar }}</td>
                                             <td class="text-center">{{ $item->saldo_akhir }}</td>

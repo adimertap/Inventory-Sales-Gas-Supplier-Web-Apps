@@ -81,6 +81,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // TRANSAKSI PENJUALAN
     Route::resource('penjualan', PenjualanController::class);
+    Route::get('/penjualan/pegawai/harian', [App\Http\Controllers\Penjualan\PenjualanController::class, 'penjualan_harian_pegawai'])->name('penjualan-harian-pegawai');
     Route::post('/penjualan/bayar/{id}', [App\Http\Controllers\Penjualan\PenjualanController::class, 'bayar'])->name('penjualan-bayar');
     Route::get('/penjualan/download/pdf/{id}', [App\Http\Controllers\Penjualan\PenjualanController::class, 'penjualan_pdf'])->name('penjualan-pdf');
 
@@ -98,7 +99,6 @@ Route::group(['middleware' => 'auth'], function () {
 
         // PDF LAPORAN PEMBELIAN
         Route::get('/pembelian-harian/download/pdf', [App\Http\Controllers\Inventory\ReportHarianPembelianController::class, 'pembelian_harian_Pdf'])->name('pembelian-harian-pdf');
-        Route::get('/pembelian-seluruh/download/pdf', [App\Http\Controllers\Inventory\ReportPembelianController::class, 'pembelian_seluruh_Pdf'])->name('pembelian-seluruh-pdf');
         Route::get('/pembelian-bulanan/download/pdf', [App\Http\Controllers\Inventory\ReportBulananPembelianController::class, 'pembelian_bulanan_Pdf'])->name('pembelian-bulanan-pdf');
         Route::get('/pembelian-bulanan/download/pdf/{bulan}', [App\Http\Controllers\Inventory\ReportBulananPembelianController::class, 'pembelian_detail_bulanan_Pdf'])->name('pembelian-detail-bulanan-pdf');
 

@@ -26,7 +26,7 @@
                 <h2 class="mb-0">Pembelian Kode {{ $item->kode_pembelian }}</h2>
                 <div class="small">
                     <span class="font-weight-500 text-primary">Tanggal Transaksai</span>
-                    {{ $item->tanggal_pembelian }}, Supplier {{ $item->Supplier->nama_supplier }}
+                    {{ date('d-M-Y', strtotime($item->tanggal_pembelian)) }}, Supplier {{ $item->Supplier->nama_supplier }}
                 </div>
 
             </div>
@@ -102,7 +102,7 @@
         <div class="card card-collapsable mt-3">
             <a class="card-header" href="#collapseCardExample-{{ $tes->id_penerimaan }}" data-toggle="collapse"
                 role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                Diterima Pada {{ $tes->tanggal_penerimaan }}, Kode {{ $tes->kode_penerimaan }}
+                Diterima Pada {{ date('d-M-Y', strtotime($tes->tanggal_penerimaan)) }}, Kode {{ $tes->kode_penerimaan }}
                 <div class="card-collapsable-arrow">
                     <i class="fas fa-chevron-down"></i>
                 </div>

@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Penjualan;
 
-use App\Exports\ExcelPenjualan;
 use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Penjualan\Penjualan;
-use App\Http\Controllers\Controller;
+use App\Models\Master\Produk;
+use App\Exports\ExcelPenjualan;
 use App\Models\Master\Category;
 use App\Models\Master\Customer;
-use App\Models\Master\Produk;
-use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Penjualan\Penjualan;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ReportPenjualanController extends Controller
@@ -104,11 +105,11 @@ class ReportPenjualanController extends Controller
         ->join('tb_master_produk', 'tb_detail_penjualan.id_produk','tb_master_produk.id_produk')
         ->join('tb_master_customer','tb_penjualan.customer_id','tb_master_customer.id_customer')
         ->leftjoin('tb_master_kategori', 'tb_master_produk.kategori_id','tb_master_kategori.id_kategori');
-        if($request->from){
-            $penjualan->where('tanggal_pembelian', '>=', $request->from);
+        if($request->from_date_export){
+            $penjualan->where('tanggal_penjualan', '>=', $request->from_date_export);
         }
-        if($request->to){
-            $penjualan->where('tanggal_pembelian', '<=', $request->to);
+        if($request->to_date_export){
+            $penjualan->where('tanggal_penjualan', '<=', $request->to_date_export);
         }
         if($request->id_customer){
             $penjualan->where('customer_id', '=', $request->id_customer);
@@ -126,16 +127,58 @@ class ReportPenjualanController extends Controller
             $penjualan->where('id_kategori', $request->id_kategori);
         }
         $penjualan = $penjualan->get();
-        $grand_total = $penjualan->sum('grand_total');
-        $total_produk = $penjualan->count('id_produk');
-        // return $penjualan;
 
-
-        if(count($penjualan) == 0){
+        $produk = Penjualan::join('tb_detail_penjualan','tb_penjualan.id_penjualan','tb_detail_penjualan.id_penjualan')
+        ->join('tb_master_produk', 'tb_detail_penjualan.id_produk','tb_master_produk.id_produk')
+        ->join('tb_master_customer','tb_penjualan.customer_id','tb_master_customer.id_customer')
+        ->leftjoin('tb_master_kategori', 'tb_master_produk.kategori_id','tb_master_kategori.id_kategori')
+        ->selectRaw('nama_produk as nama, SUM(jumlah_jual) as jumlah')
+        ->groupBy('nama_produk');
+        if($request->from_date_export){
+            $produk->where('tanggal_penjualan', '>=', $request->from_date_export);
+        }
+        if($request->to_date_export){
+            $produk->where('tanggal_penjualan', '<=', $request->to_date_export);
+        }
+        if($request->id_customer){
+            $produk->where('customer_id', '=', $request->id_customer);
+        }
+        if($request->kode){
+            $produk->where('code', $request->kode);
+        }
+        if($request->id_produk){
+            $produk->where('nama_produk', $request->id_produk);
+        }
+        if($request->id_pegawai){
+            $produk->where('id', $request->id_pegawai);
+        }
+        if($request->id_kategori){
+            $produk->where('id_kategori', $request->id_kategori);
+        }
+        $produk = $produk->get();
+        
+        if(count($penjualan) == 0 && count($produk) == 0){
             Alert::warning('Tidak Ditemukan Data', 'Data yang Anda Cari Tidak Ditemukan');
             return redirect()->back();
         }else{
-            return new ExcelPenjualan($penjualan, $grand_total);
+            if($request->radio_input == 'pdf'){
+                $pdf = Pdf::loadview('pdf.penjualan.seluruh.penjualan_seluruh_pdf',['penjualan'=>$penjualan, 'produk' =>$produk]);
+               
+                if($request->from_date_export && $request->to_date_export){
+                    return $pdf->download('Laporan-Penjualan '.$request->from_date_export.' - '.$request->to_date_export.' .pdf');
+                }else{
+                    return $pdf->download('Laporan-Penjualan-Keseluruhan.pdf');
+                }
+               
+                Alert::success('Berhasil', 'Laporan Penjualan Berhasil Didownload');
+            }else{
+                if($request->from_date_export && $request->to_date_export){
+                    return Excel::download(new ExcelPenjualan($penjualan, $produk), 'Laporan-Penjualan '.$request->from_date_export.' - '.$request->to_date_export.' .xlsx');
+                }else{
+                    return Excel::download(new ExcelPenjualan($penjualan, $produk), 'Laporan-Penjualan-Keseluruhan.xlsx');
+                }
+            }
+            Alert::success('Berhasil', 'Laporan Penjualan Berhasil Didownload');
         }
     }
 

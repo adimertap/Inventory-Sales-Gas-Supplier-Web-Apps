@@ -90,7 +90,7 @@
                                         <tr role="row" class="odd">
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}</th>
                                             <td>{{ $item->kode_pembelian }}</td>
-                                            <td>{{ $item->tanggal_pembelian }}</td>
+                                            <td>{{ date('d-M-Y', strtotime($item->tanggal_pembelian)) }}</td>
                                             <td>{{ $item->Supplier->nama_supplier }}</td>
                                             <td class="text-center">Rp. {{ number_format($item->grand_total) }}</td>
                                             <td class="text-center">
@@ -112,10 +112,9 @@
                                         <td colspan="1" class="text-center">{{ $jumlah }} Transaksi</td>
                                         <td colspan="1" class="text-center">Rp. {{ number_format($total) }}</td>
                                         <td colspan="1" class="text-center">
-                                            <button class="btn btn-sm btn-info" type="button" data-toggle="modal"
-                                            data-target="#ModalFilterPDF">.Pdf</button>
+                                           
                                             <button class="btn btn-sm btn-primary" type="button" data-toggle="modal"
-                                                data-target="#ModalFilter">.Excel</button><br>
+                                                data-target="#ModalFilter">Download Laporan</button><br>
                                         </td>
                                     </tr>
                                 </table>
@@ -127,118 +126,14 @@
         </div>
     </div>
 </main>
-<div class="modal fade" id="ModalFilterPDF" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-primary">
-                <h5 class="modal-title text-white">Filter Data</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">×</span></button>
-            </div>
-            <div class="modal-body">
-                <form action="{{ route('pembelian-seluruh-pdf') }}" id="form_pdf" method="GET">
-                    <div class="col-12 border p-2 mr-1">
-                        <h5 class="text-primary">Filter Laporan Pembelian!</h5>
-                        <p class="small">Filter Laporan Pembelian Sesuai dengan Kriteria Inputan</p>
-                        <div class="row input-daterange">
-                            <div class="form-group col-6">
-                                <label class="small">Start Date</label>
-                                <div class="input-group input-group-joined">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i data-feather="search"></i>
-                                        </span>
-                                    </div>
-                                    <input type="date" name="from_date_export" id="from_date_export"
-                                        class="form-control" placeholder="From Date" />
-                                </div>
-                            </div>
-                            <div class="form-group col-6">
-                                <label class="small">End Date</label>
-                                <div class="input-group input-group-joined">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i data-feather="search"></i>
-                                        </span>
-                                    </div>
-                                    <input type="date" name="to_date_export" id="to_date_export" class="form-control"
-                                        placeholder="To Date" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-6">
-                                <label class="small mb-1 mr-1" for="id_jenis_supplier">Jenis Supplier</label><span
-                                    class="mr-4 mb-3" style="color: red">*</span>
-                                <select class="form-control" name="id_jenis_supplier" class="form-control"
-                                    id="id_jenis_supplier">
-                                    <option value="">Pilih Jenis Supplier</option>
-                                    @foreach ($jenis as $jeniz)
-                                    <option value="{{ $jeniz->id_jenis_supplier }}">{{ $jeniz->nama_jenis }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-6">
-                                <label class="small mb-1 mr-1" for="id_supplier">Supplier</label><span class="mr-4 mb-3"
-                                    style="color: red">*</span>
-                                <select class="form-control" name="id_supplier" class="form-control" id="id_supplier">
-                                    <option value="">Pilih Supplier</option>
-                                    @foreach ($supplier as $sup)
-                                    <option value="{{ $sup->id_supplier }}">{{ $sup->nama_supplier }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-6">
-                                <label class="small mb-1 mr-1" for="id_produk">Produk</label><span class="mr-4 mb-3"
-                                    style="color: red">*</span>
-                                <select class="form-control" name="id_produk" class="form-control" id="id_produk">
-                                    <option value="">Pilih Produk</option>
-                                    @foreach ($produk as $pro)
-                                    <option value="{{ $pro->nama_produk }}">{{ $pro->nama_produk }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-6">
-                                <label class="small mb-1 mr-1" for="id_kategori">Kategori</label><span class="mr-4 mb-3"
-                                    style="color: red">*</span>
-                                <select class="form-control" name="id_kategori" class="form-control" id="id_kategori">
-                                    <option value="">Pilih Kategori</option>
-                                    @foreach ($kategori as $kat)
-                                    <option value="{{ $kat->id_kategori }}">{{ $kat->nama_kategori }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="small mb-1 mr-1" for="id_pegawai">Pegawai</label><span class="mr-4 mb-3"
-                                style="color: red">*</span>
-                            <select class="form-control" name="id_pegawai" class="form-control" id="id_pegawai">
-                                <option value="">Pilih Pegawai</option>
-                                @foreach ($pegawai as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Filter</button>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 
 <div class="modal fade" id="ModalFilter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary">
-                <h5 class="modal-title text-white">Filter Data</h5>
+                <h5 class="modal-title text-white">Download Laporan</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">×</span></button>
             </div>
@@ -247,6 +142,22 @@
                     <div class="col-12 border p-2 mr-1">
                         <h5 class="text-primary">Filter Laporan Pembelian!</h5>
                         <p class="small">Filter Laporan Pembelian Sesuai dengan Kriteria Inputan</p>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="flexRadioDefault1" type="radio" value="excel"
+                                        name="radio_input" checked />
+                                    <label class="small" for="flexRadioDefault1">Export Excel</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="flexRadioDefault2" type="radio" value="pdf"
+                                        name="radio_input" />
+                                    <label class="small" for="flexRadioDefault2">Export PDF</label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row input-daterange">
                             <div class="form-group col-6">
                                 <label class="small">Start Date</label>

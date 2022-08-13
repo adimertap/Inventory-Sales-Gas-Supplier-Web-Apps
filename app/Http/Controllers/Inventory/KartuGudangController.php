@@ -147,7 +147,7 @@ class KartuGudangController extends Controller
     public function show($id)
     {
         $produk = Produk::with('Kategori')->find($id);
-        $kartu_keseluruhan = KartuGudang::with('Produk','Supplier')->where('id_produk', $id)->get();
+        $kartu_keseluruhan = KartuGudang::with('Produk','Supplier')->where('id_produk', $id)->orderBy('tanggal_transaksi','DESC')->get();
         $tanggal = Carbon::now()->format('F Y');
 
         return view('pages.inventory.kartugudang.detail', compact('kartu_keseluruhan', 'tanggal','produk'));
@@ -156,7 +156,7 @@ class KartuGudangController extends Controller
     public function penerimaan($id)
     {
         $produk = Produk::with('Kategori')->find($id);
-        $kartu_penerimaan = KartuGudang::with('Produk','Supplier')->where('id_produk', $id)->where('jenis_kartu','Penerimaan')->get();
+        $kartu_penerimaan = KartuGudang::with('Produk','Supplier')->where('id_produk', $id)->where('jenis_kartu','Penerimaan')->orderBy('tanggal_transaksi','DESC')->get();
 
         return view('pages.inventory.kartugudang.kartu-penerimaan', compact('produk','kartu_penerimaan'));
     }
@@ -164,7 +164,7 @@ class KartuGudangController extends Controller
     public function penjualan($id)
     {
         $produk = Produk::with('Kategori')->find($id);
-        $kartu_penjualan = KartuGudang::with('Produk','Supplier')->where('id_produk', $id)->where('jenis_kartu','Penjualan')->get();
+        $kartu_penjualan = KartuGudang::with('Produk','Supplier')->where('id_produk', $id)->where('jenis_kartu','Penjualan')->orderBy('tanggal_transaksi','DESC')->get();
 
         return view('pages.inventory.kartugudang.kartu-penjualan', compact('produk','kartu_penjualan'));
     }

@@ -39,6 +39,16 @@ class PenjualanController extends Controller
         return view('pages.penjualan.penjualan.index', compact('penjualan','penjualan_hari','total'));
     }
 
+    public function penjualan_harian_pegawai()
+    {
+        $penjualan = Penjualan::where('id', Auth::user()->id)->where('tanggal_penjualan', Carbon::now()->format('Y-m-d'))->orderBy('created_at', 'DESC')->get();
+        $penjualan_hari = Penjualan::where('id', Auth::user()->id)->where('tanggal_penjualan', Carbon::now()->format('Y-m-d'))->count();
+        $total = Penjualan::where('id', Auth::user()->id)->where('tanggal_penjualan', Carbon::now()->format('Y-m-d'))->sum('grand_total');
+
+        return view('pages.penjualan.penjualan.index', compact('penjualan','penjualan_hari','total'));
+    }
+
+
     public function penjualan_pdf($id)
     {
         $penjualan = Penjualan::with('Detail','Customer')->find($id);

@@ -54,7 +54,7 @@ class ReportBulananPembelianController extends Controller
         if($request->to){
             $pembelian->where('tanggal_pembelian', '<=', $request->to);
         }
-        $pembelian = $pembelian->get();
+        $pembelian = $pembelian->OrderBy('updated_at','DESC')->get();
         $total = $pembelian->sum('grand_total');
         $jumlah = $pembelian->count();
 
@@ -103,7 +103,7 @@ class ReportBulananPembelianController extends Controller
         if($request->to){
             $pembelian->where('tanggal_pembelian', '<=', $request->to);
         }
-        $pembelian = $pembelian->get();
+        $pembelian = $pembelian->OrderBy('updated_at','DESC')->get();
         $total = $pembelian->sum('grand_total');
         $jumlah = $pembelian->count();
 

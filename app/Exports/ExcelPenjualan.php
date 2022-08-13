@@ -2,97 +2,41 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\WithHeadings;
-use Illuminate\Contracts\Support\Responsable;
-use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use Maatwebsite\Excel\Concerns\WithColumnWidths;
-use Maatwebsite\Excel\Concerns\WithCustomStartCell;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Events\AfterSheet;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class ExcelPenjualan implements FromCollection, Responsable, ShouldAutoSize,
-WithMapping, WithHeadings, WithColumnWidths, WithEvents, WithCustomStartCell
+class ExcelPenjualan implements FromView, ShouldAutoSize, WithEvents
 {
-    use Exportable;
-    public $penjualan;
-    public $grand_total;
-    private $fileName = "report-penjualan.xlsx";
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function __construct($penjualan)
+    public function __construct($penjualan, $produk)
     {
         $this->penjualan = $penjualan;
-        $this->grand_total = $penjualan->sum('grand_total');
-        $this->total_produk = $penjualan->count('id_produk');
+        $this->produk = $produk;
     }
 
-    public function collection()
+    public function view(): View
     {
-        return $this->penjualan;
-    }
-
-    public function columnWidths(): array
-    {
-        return [
-            'C' => 30,
-            'E' => 30,  
-            'I' => 25,          
-        ];
-    }
-
-    public function headings():array
-    {
-        return[
-            'Kode Penjualan',
-            'Tanggal Penjualan',
-            'Customer',
-            'Kode Customer',
-            'Nama Produk',
-            'Kategori',
-            'Jumlah Jual',
-            'Harga Jual',
-            'Total Jual'
-        ];
-    }
-
-    public function map($penjualan): array
-    {
-            return[
-                $penjualan->kode_penjualan,
-                $penjualan->tanggal_penjualan,
-                $penjualan->nama_customer,
-                $penjualan->code,
-                $penjualan->nama_produk,
-                $penjualan->nama_kategori,
-                $penjualan->jumlah_jual,
-                $penjualan->harga_jual,
-                $penjualan->total_jual
-            ];
-            
+        return view('pdf.penjualan.seluruh.excel',['penjualan' => $this->penjualan, 'produk' => $this->produk]);
     }
 
     public function registerEvents(): array
     {
+
         return[
             AfterSheet::class => function(AfterSheet $event){
-                $event->sheet->getStyle('A3:I3')->applyFromArray([
+                $event->sheet->getStyle('A1:J1')->applyFromArray([
                     'font' => [
                         'bold' => true
                     ],
                     'alignment' => [
                         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
                     ],
+                    
                 ]);
+
             }
         ];
-    }
-
-    public function startCell(): string
-    {
-        return 'A3';
     }
 }

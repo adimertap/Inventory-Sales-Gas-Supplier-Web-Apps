@@ -20,7 +20,7 @@
                         <div class="h3 text-black">Invoice Pembelian</div>
                         Kode #{{ $transaksi->kode_pembelian }}
                         <br>
-                        {{ $transaksi->tanggal_pembelian }}
+                        {{ date('d-M-Y', strtotime($transaksi->tanggal_pembelian)) }}
                     </div>
                 </div>
             </div>

@@ -26,7 +26,7 @@
                 <h2 class="mb-0">Penjualan Kode {{ $item->kode_penjualan }}</h2>
                 <div class="small">
                     <span class="font-weight-500 text-primary">Tanggal Transaksai</span>
-                    {{ $item->tanggal_penjualan }}, Customer {{ $item->Customer->nama_customer }}
+                    {{ date('d-M-Y', strtotime($item->tanggal_penjualan)) }}, Customer {{ $item->Customer->nama_customer }}
                 </div>
 
             </div>

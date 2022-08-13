@@ -36,8 +36,8 @@
                             <hr>
                             <div class="row align-items-center justify-content-between">
                                 <div class="col">
-                                    <h4 class="text-primary">Produk {{ $produk->nama_produk }}, Kategori {{ $produk->Kategori->nama_kategori }}</h4>
-                                    <p class="text-gray-700">Jumlah Stok: {{ $produk->stok }}</p>
+                                    <h2 class="text-primary">Produk {{ $produk->nama_produk }}, Kategori {{ $produk->Kategori->nama_kategori }}</h2>
+                                    <p class="text-gray-700">Jumlah Stok Produk ini: {{ $produk->stok }}</p>
                                     
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                                             <th class="sorting text-center" tabindex="0" aria-controls="dataTable"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Position: activate to sort column ascending"
-                                                style="width: 60px;">Tanggal Transaksi</th>
+                                                style="width: 90px;">Tanggal Transaksi</th>
                                             <th class="sorting text-center" tabindex="0" aria-controls="dataTable"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Position: activate to sort column ascending"
@@ -110,15 +110,20 @@
                                             @else
                                                 <td class="text-center">Customer {{ $item->Customer->nama_customer }}</td>
                                             @endif
-                                            <td class="text-center">{{ $item->tanggal_transaksi }}</td>
+                                            @if ($item->jenis_kartu == 'Penerimaan')
+                                            <td class="text-center">Diterima pada {{ date('d-M-Y', strtotime($item->tanggal_transaksi)) }}</td>
+                                            @else
+                                            <td class="text-center">Dijual pada {{ date('d-M-Y', strtotime($item->tanggal_transaksi)) }}</td>
+                                            @endif
+                                        
                                             <td class="text-center">{{ $item->kode_transaksi }}</td>
                                             <td class="text-center">{{ $item->jumlah_masuk }}</td>
                                             <td class="text-center">{{ $item->jumlah_keluar }}</td>
                                             <td class="text-center">{{ $item->saldo_akhir }}</td>
                                             @if ($item->Supplier != '')
-                                            <td class="text-center">Rp.{{ number_format($item->harga_beli)}}</td>
+                                            <td class="text-center">Jual Rp.{{ number_format($item->harga_beli)}}</td>
                                             @else
-                                            <td class="text-center">Rp.{{ number_format($item->harga_jual)}}</td>
+                                            <td class="text-center">Beli Rp.{{ number_format($item->harga_jual)}}</td>
                                             @endif
                                         
                                         </tr>

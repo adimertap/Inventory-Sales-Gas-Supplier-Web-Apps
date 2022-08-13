@@ -9,7 +9,7 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"></div>
-                            Transaksi Pembelian Bulanana
+                            Transaksi Pembelian Bulanan
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
@@ -109,7 +109,7 @@
                                         <tr role="row" class="odd">
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}</th>
                                             <td>{{ $item->kode_pembelian }}</td>
-                                            <td>{{ $item->tanggal_pembelian }}</td>
+                                            <td>{{ date('d-M-Y', strtotime($item->tanggal_pembelian)) }}</td>
                                             <td>{{ $item->Supplier->nama_supplier }}</td>
                                             <td class="text-center">Rp. {{ number_format($item->grand_total) }}</td>
                                             <td class="text-center">
