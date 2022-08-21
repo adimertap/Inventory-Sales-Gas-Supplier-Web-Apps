@@ -72,7 +72,7 @@
                             @forelse ($pembelian as $tes)
                             <tr>
                                 <td>{{ $tes->kode_pembelian }}</td>
-                                <td>{{ date('d-M-Y', strtotime($item->tanggal_pembelian)) }}</td>
+                                <td>{{ date('d-M-Y', strtotime($tes->tanggal_pembelian)) }}</td>
                                 <td>
                                     <button class="btn btn-primary btn-sm prosesBtn small p-0"
                                         value="{{ $tes->id_pembelian }}" type="button" data-bs-toggle="tooltip"
