@@ -1,64 +1,29 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+[![inv.png](https://i.postimg.cc/vHKnpCG3/inv.png)](https://postimg.cc/kBxDS16b)
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Inventory and Sales Web Application for Gas Supplier PT. SuksesBerkahBertumbuh
 
-## About Laravel
+Inventory & Sales Gas Supplier Web Application is a web-based application that supports all back office management, especially inventory and sales of gas and aqua products at PT. Suksesberkahbertumbuh. I am a Full-Stack Web Developer in developing this application starting from business processes, database design and code implementation. 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This application is made from the problems that occur at PT Suksesberkahbermbuh, namely the irregular number of incoming and outgoing stock causing inaccurate reporting, recording sales by employees who do not comply with operational standards. The solution to this problem is to build a web application for inventory and product sales.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Initially appeared on
+[gist](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2). But the page cannot open anymore so that is why I have moved it here.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Feature
+- Login and Master Data Management (Employees, Supplier, Supplier Type, Category, Product and Customer).
+- Daily and Monthly Purchase Inventory Reporting.
+- Dashboard Inventory, Purchase Order, Receiving and BIN Card Product.
+- Dashboard Sales, Sales, Employee Sales.
+- Daily and Monthly Sales Reporting.
 
-## Learning Laravel
+## Development
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+The first step in application design is research, design thinking and business process design. The research is carried out by discussing with clients, the results of the research are business processes that are in accordance with standard operating procedures for Inventory and Sales.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+There are 2 (two) roles in the application that have been created, including the Owner Role who works in managing all master data business processes and transaction reporting, the second is the Employee Role which functions to record all daily sales transactions.
 
-## Laravel Sponsors
+### Tech Stack & Testing
+Tech stack in application design which includes MySQL for databases, Laravel 8 Framework, Front-End HTML and CSS (Bootstrap 5), Backend PHP and Javascript. Business process design tools include Notion and Visual Studio Code for code implementation. The application has been tested and is running normally until now.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Database
+Database design is carried out on the MySQL application which is described in the form of PDM or Physical Data Model. PDM which was built as a guide in making Inventory and Sales Web Applications consisting of 13 entitas (table).
